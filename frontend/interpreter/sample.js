@@ -1,0 +1,200 @@
+({
+	type: 'BREAK',
+	value: null,
+});
+const star = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'REPEAT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 5,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 144,
+		},
+	],
+	// [
+	// 	{
+	// 		type: 'BREAK',
+	// 		value: null,
+	// 	},
+	// ],
+	[
+		{
+			type: 'END_REPEAT',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
+
+const nestedLoop = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'REPEAT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 2,
+		},
+	],
+	[
+		{
+			type: 'REPEAT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 5,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 144,
+		},
+	],
+
+	[
+		{
+			type: 'END_REPEAT',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'BREAK',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'END_REPEAT',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
+
+
+const infiniteLoop = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'REPEAT',
+			value: null,
+		},
+		// {
+		// 	type: 'NUMBER',
+		// 	value: 2,
+		// },
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 144,
+		},
+	],
+
+	[
+		{
+			type: 'END_REPEAT',
+			value: null,
+		},
+	],
+	// [
+	// 	{
+	// 		type: 'BREAK',
+	// 		value: null,
+	// 	},
+	// ],
+	// [
+	// 	{
+	// 		type: 'END_REPEAT',
+	// 		value: null,
+	// 	},
+	// ],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
+module.exports = nestedLoop;
