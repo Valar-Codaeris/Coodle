@@ -2,13 +2,13 @@ import p5 from 'p5';
 
 export class p5Wrapper {
 	// To hold the variable values, and to call the functions from the interpreter
-	constructor() {
+	constructor(htmlElement) {
 		this.time = 16;
 		this.x = 0;
 		this.y = 0;
 		this.mascot = null;
 		this.angle = 0;
-		this.sketch = new p5(this.p5instance.bind(this));
+		this.sketch = new p5(this.p5instance.bind(this), htmlElement);
 
 		this.dimensions = {
 			width: 400,

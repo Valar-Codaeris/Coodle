@@ -16,4 +16,13 @@ body {
 	width: 100vw;
 	margin: 0;
 	padding: 0;
+	overflow-y: hidden;
+}
+
+#content {
+	height: 90vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

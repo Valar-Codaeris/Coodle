@@ -1,12 +1,12 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Segment } from 'semantic-ui-react'
+
+import {App} from './components/app';
 import './styles/main.css';
 
-import './coodle';
+// import './coodle';
 
 ReactDOM.render(
-  <Segment>Coodle</Segment>,
+  <App/>,
   document.getElementById('app')
 );

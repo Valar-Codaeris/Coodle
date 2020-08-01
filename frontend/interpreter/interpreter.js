@@ -22,11 +22,11 @@ export class NodeVisitor {
 
 export class Interpreter extends NodeVisitor {
 	// The most important class
-	constructor(parser) {
+	constructor(parser, htmlElement) {
 		super();
 		this.parser = parser;
 		this.environment = {}; // declare an environment, in case we are addig global variables in the future
-		this.graphic = new p5Wrapper();
+		this.graphic = new p5Wrapper(htmlElement);
 	}
 
 	async visitStart(node) {
