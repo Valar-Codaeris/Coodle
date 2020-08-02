@@ -12,6 +12,7 @@ export class NodeVisitor {
 	async visit(node) {
 		// A generic node visitor function
 		const methodName = `visit${node.constructor.name}`;
+
 		if (this[methodName]) {
 			return this[methodName](node);
 		}
@@ -21,13 +22,19 @@ export class NodeVisitor {
 
 export class Interpreter extends NodeVisitor {
 	// The most important class
-	constructor(parser, htmlElement) {
+	constructor(htmlElement) {
 		super();
-		this.parser = parser;
+		// this.parser = parser;
 		this.environment = {}; // declare an environment, in case we are addig global variables in the future
 		this.htmlElement = htmlElement;
-		this.node = this.parser.expression(); // Get the Abstract Syntax Tree from the Parser
+		// this.node = this.parser.expression(); // Get the Abstract Syntax Tree from the Parser
 		this.graphic = new p5Wrapper(this.htmlElement);
+	}
+
+
+	attachParser(parser) {
+		this.parser = parser;
+		this.node = this.parser.expression(); // Get the abstract syntax tree from the parser
 	}
 
 	async visitStart(node) {
@@ -47,21 +54,23 @@ export class Interpreter extends NodeVisitor {
 	async visitCommand(node) {
 		console.log('Executing command', node);
 		console.log(types);
+		console.log(node.token.line);
+		this.updateActiveLine(node.token.line);
 		switch (node.type) {
 			case types.FRONT: {
 				await this.graphic.move(node.value);
 				break;
 			}
 			case types.BACK: {
-				this.graphic.move(-node.value);
+				await this.graphic.move(-node.value);
 				break;
 			}
 			case types.ROTCW: {
-				this.graphic.rotate(node.value);
+				await this.graphic.rotate(node.value);
 				break;
 			}
 			case types.ROTACW: {
-				this.graphic.rotate(-node.value);
+				await this.graphic.rotate(-node.value);
 				break;
 			}
 			case types.BREAK: {
@@ -107,9 +116,9 @@ export class Interpreter extends NodeVisitor {
 		this.graphic.deleteSketch();
 	}
 
-	async analyse() {
+	async analyse(updateActiveLine) {
 		console.log('Starting the analysis');
-
+		this.updateActiveLine = updateActiveLine;
 		try {
 			const result = await this.visit(this.node);
 		} catch (error) {
