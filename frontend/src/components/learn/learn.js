@@ -30,16 +30,12 @@ export class Learn extends React.Component {
 
 	handleTakePhotos(dataUri) {
 		console.log('photo captured');
-		// window.location = dataUri;
 		this.setState(
 			{
 				photo: true,
 				photoData: dataUri,
 				inputState: inputStates.IMAGE,
 			}
-			// (state) => {
-			// 	this.getTokens();
-			// }
 		);
 	}
 
@@ -57,9 +53,6 @@ export class Learn extends React.Component {
 						photo: true,
 						inputState: inputStates.IMAGE,
 					}
-					// (state) => {
-					// 	this.getTokens();
-					// }
 				);
 			},
 			false
@@ -83,15 +76,14 @@ export class Learn extends React.Component {
 				console.log(response);
 				setTimeout(() => {
 					this.setState({
-						tokens: nestedLoop,
+						tokens: square,
 						canvasState: states.READY,
 						inputState: inputStates.READY,
 					});
 				}, 3000);
 			})
 			.catch((error) => {
-				// console.error(error);
-				// this.reset();
+
 				this.setState({
 					tokens: nestedLoop,
 					canvasState: states.READY,
@@ -206,7 +198,8 @@ export class Learn extends React.Component {
 				)}
 				<Canvas
 					state={this.state.canvasState}
-					tokens={square}
+					tokens={this.state.tokens}
+					level={this.props.level}
 					updateActiveLine={this.updateActiveLine.bind(this)}
 				/>
 			</div>

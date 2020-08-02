@@ -22,14 +22,16 @@ export class NodeVisitor {
 
 export class LearnInterpreter extends NodeVisitor {
 	// The most important class
-	constructor(parser, htmlElement) {
+	constructor( htmlElement, level) {
 		super();
-		this.parser = parser;
 		this.environment = {}; // declare an environment, in case we are addig global variables in the future
 		this.player = new Player();
-		this.graphic = new p5WrapperLearn(htmlElement, this.player);
+		this.graphic = new p5WrapperLearn(htmlElement, this.player, level);
 	}
 
+	attachParser(parser) {
+		this.parser = parser;
+	}
 	async visitStart(node) {
 		console.log('Starting program execution');
 	}
@@ -74,6 +76,9 @@ export class LearnInterpreter extends NodeVisitor {
 		}
 	}
 
+	deleteSketch() {
+		this.graphic.deleteSketch();
+	}
 	
 	async visitRepeat(node) {
 		console.log(`Repeat ${node.times} times`);

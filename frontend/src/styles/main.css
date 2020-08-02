@@ -87,7 +87,7 @@ body {
 	height: 60vh;
 	display: flex;
 	/* flex-direction: column; */
-	justify-content: center;
+	justify-content: space-around;
 	align-items: space-around;
 	/* width: 55vw; */
 	min-width: 350px;

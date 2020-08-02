@@ -19,15 +19,20 @@ export class LearnSection extends React.Component {
         };
     }
 
+    chooseLevel (level)  {
+        this.setState({
+            level: level+1
+        })
+    }
     render() {
         return <div><Grid  columns="equal">
             <Grid.Column style={studyStyle}>
-                <LearnList list={this.state.learnList}/>
+                <LearnList list={this.state.learnList} onChoose={this.chooseLevel.bind(this)}/>
                 <LearnDescription list={this.state.learnList}/>
             </Grid.Column >
 
             <Grid.Column style={executeStyle}>
-                <Learn/>
+                <Learn level={this.state.level}/>
             </Grid.Column>
             
         </Grid><Divider style={{zIndex: -1}} vertical><Icon name="book" size="huge"/></Divider></div>
