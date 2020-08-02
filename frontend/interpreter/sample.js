@@ -5,7 +5,7 @@
 	}
 );
 
-const lessonSolution = [
+const learnSolution = [
 	[
 		{
 			type: 'START',
@@ -406,4 +406,4 @@ const infiniteLoop = [
 	],
 ];
 
-module.exports = {lessonSolution, nestedLoop, square, puzzleSolution};
+module.exports = {learnSolution, nestedLoop, square, puzzleSolution};

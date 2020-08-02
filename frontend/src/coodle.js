@@ -1,16 +1,16 @@
 const {Interpreter} = require('../interpreter/interpreter');
 const {Parser} = require('../interpreter/parser');
-const { p5WrapperLearn } = require('../interpreter/p5WrapperLearn');
+const { p5WrapperLearn } = require('../interpreter/p5WrapperPuzzle');
 
 // Get the sample tokens
-const {lessonSolution} = require('../interpreter/sample');
-const { learnInterpreter } = require('../interpreter/learnInterpreter');
+const sample = require('../interpreter/sample');
+const { PuzzleInterpreter } = require('../interpreter/puzzleInterpreter');
 
 // Create a parser for the given set of tokens
-const parser = new Parser(lessonSolution);
+const parser = new Parser(sample);
 
 // Create an interpreter for the Abstract Syntax Tree returned by the parser
-const interpreter = new learnInterpreter(parser, document.getElementById('app'));
+const interpreter = new PuzzleInterpreter(parser, document.getElementById('app'));
 
 // Analyse the code and produce visual output
 interpreter.analyse();

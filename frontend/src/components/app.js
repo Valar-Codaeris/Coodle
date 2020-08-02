@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import {Menu} from './menu';
 import {Draw} from './draw/draw';
-import {Learn} from './learn';
+import {Learn} from './learn/learn';
 import {Puzzle} from './puzzle/puzzle';
 
 export class App extends React.Component {

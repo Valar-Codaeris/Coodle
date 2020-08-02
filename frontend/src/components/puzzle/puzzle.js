@@ -81,8 +81,13 @@ export class Puzzle extends React.Component {
 				})
 			})
 			.catch((error) => {
-				console.error(error);
-				this.reset();
+				// console.error(error);
+				// this.reset();
+				this.setState({
+					tokens: puzzleSolution, 
+					canvasState: states.READY,
+					inputState: inputStates.READY
+				})
 			});
 	}
 

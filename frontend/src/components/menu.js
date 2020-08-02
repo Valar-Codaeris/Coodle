@@ -31,7 +31,7 @@ export const Menu = () => {
 
 						<Link to='/puzzle'>
 							<Button style={buttonStyle} inverted color='green'>
-								Play puzzles
+								Puzzles
 							</Button>
 						</Link>
 					</div>

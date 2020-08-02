@@ -20,7 +20,7 @@ export class NodeVisitor {
 	}
 }
 
-export class learnInterpreter extends NodeVisitor {
+export class LearnInterpreter extends NodeVisitor {
 	// The most important class
 	constructor(parser, htmlElement) {
 		super();

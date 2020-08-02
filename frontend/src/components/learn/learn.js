@@ -2,17 +2,16 @@ import React from 'react';
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
-import { Canvas, states } from './canvas';
+import { LearnCanvas, states } from './learnCanvas';
 import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
-import {CodeDisplay} from '../codeDisplay';
 
 // Get the sample tokens
-const { nestedLoop, square } = require('../../../interpreter/sample');
+const {learnSolution} = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
-export class Draw extends React.Component {
+export class Learn extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -67,8 +66,8 @@ export class Draw extends React.Component {
 		}
 	}
 
+
 	getTokens() {
-		// axios.get()
 		axios
 			.post('/api/lexer/', {
 				data: this.state.photoData,
@@ -76,33 +75,34 @@ export class Draw extends React.Component {
 			.then((response) => {
 				console.log(response);
 				this.setState({
-					tokens: nestedLoop,
+					tokens: learnSolution, 
 					canvasState: states.READY,
-					inputState: inputStates.READY,
-				});
+					inputState: inputStates.READY
+				})
 			})
 			.catch((error) => {
 				// console.error(error);
 				// this.reset();
 				this.setState({
-					tokens: nestedLoop,
+					tokens: learnSolution, 
 					canvasState: states.READY,
-					inputState: inputStates.READY,
-				});
+					inputState: inputStates.READY
+				})
 			});
 	}
 
 	stop() {
 		this.setState({
-			canvasState: states.RESET,
+			canvasState: states.RESET
 		});
 	}
 
 	start() {
 		this.setState({
-			canvasState: states.PLAY,
+			canvasState: states.PLAY
 		});
 	}
+
 
 	reset() {
 		this.setState({
@@ -117,13 +117,8 @@ export class Draw extends React.Component {
 	render() {
 		return (
 			<div className='drawContentStyle'>
-				{this.state.photoData ? (
-					<ExecutionWindow
-						start={this.start.bind(this)}
-						stop={this.stop.bind(this)}
-						reset={this.reset.bind(this)}
-						photoData={this.state.photoData}
-					/>
+				{this.state.photoData ? (	
+					<ExecutionWindow start={this.start.bind(this)} stop={this.stop.bind(this)} reset={this.reset.bind(this)} photoData={this.state.photoData}/>
 				) : (
 					<div className='cameraStyle'>
 						<Camera
@@ -138,8 +133,7 @@ export class Draw extends React.Component {
 						/>
 					</div>
 				)}
-				<Canvas state={this.state.canvasState} tokens={square} />
-				<CodeDisplay tokens={square} />
+				<LearnCanvas state={this.state.canvasState} tokens={learnSolution} />
 			</div>
 		);
 	}
@@ -150,4 +144,3 @@ const inputStates = {
 	LOADING: 'loading',
 	READY: 'ready',
 };
-
