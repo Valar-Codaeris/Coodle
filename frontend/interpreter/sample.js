@@ -1,7 +1,115 @@
-({
-	type: 'BREAK',
-	value: null,
-});
+(
+	{
+		type: 'BREAK',
+		value: null,
+	}
+);
+
+const puzzleSolution =[
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[ 
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 270,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			valule: null
+		},
+		{
+			type: 'NUMBER',
+			value: 200,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			valule: null
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			valule: null
+		},
+		{
+			type: 'NUMBER',
+			value: 200,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 270,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			valule: null
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
+
 const star = [
 	[
 		{
@@ -197,4 +305,5 @@ const infiniteLoop = [
 		},
 	],
 ];
-module.exports = nestedLoop;
+
+module.exports = puzzleSolution;
