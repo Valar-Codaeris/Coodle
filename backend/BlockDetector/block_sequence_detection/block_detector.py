@@ -42,7 +42,8 @@ def preprocess(path_to_image):
 def contour_detection(preprocessed_image, src_image, ratio):
 
 	output_patches = []
-	y_coordinates = []
+	centroids = []
+	heights = [] # h/2
 
 	edged = cv2.Canny(preprocessed_image, 30, 200)
 	contours, hierarchy = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE) 
@@ -51,7 +52,7 @@ def contour_detection(preprocessed_image, src_image, ratio):
 
 	for contour in reversed(contours):
 		if len(contour) >= 4:
-			if cv2.contourArea(contour) > 200:
+			if cv2.contourArea(contour) > 300:
 				token_number += 1
 
 				cnt_scaled, cy_scaled = scale_contour(contour, ratio)
@@ -61,7 +62,10 @@ def contour_detection(preprocessed_image, src_image, ratio):
 				cv2.imshow('patch'+ str(token_number), roi)
 				cv2.waitKey(0)
 				cv2.destroyAllWindows()
-				#output_patches.append(roi)
+				
+				output_patches.append(roi)
+				centroids.append(cy_scaled)
+				heights.append(h/2)
 				#y_coordinates.append(cy_scaled)
 
 				#if token_number == 1:
@@ -71,14 +75,44 @@ def contour_detection(preprocessed_image, src_image, ratio):
 						#height_difference = abs(y_coordinate - y_coordinates[token_number-1])
 						#if height_difference < :
 
-				draw_contour = cv2.drawContours(src_image, [cnt_scaled], -1, (255, 140, 240), 2)
-				cv2.imshow('Contours', draw_contour) 
-				cv2.waitKey(0) 
-				cv2.destroyAllWindows()
+				#draw_contour = cv2.drawContours(src_image, [cnt_scaled], -1, (255, 140, 240), 2)
+				#cv2.imshow('Contours', draw_contour) 
+				#cv2.waitKey(0) 
+				#cv2.destroyAllWindows()
 
-	return output_patches, y_coordinates
+	# print(len(output_patches))
+
+	return output_patches, centroids, heights 
+
+def get_line_numbers(centroids, heights):
+
+	line_number = [1] # initialise line no of first token
+	
+	for i in range(1, len(centroids)):
+		if abs(centroids[i] - centroids[i-1]) <  abs(heights[i] + heights[i-1]):  # heights already in h/2 
+			line_number.append(line_number[len(line_number)-1])
+		else:
+			line_number.append(line_number[len(line_number)-1] + 1)
+
+	return line_number
+
+
+def detect_tokens(path_to_image): # wrapper function
+
+	'''output : output_patches = list of cropped token images
+				line_number    = list of line numbers where each token appears
+
+			use the index of list for the sequential token numbers
+	'''
+
+	preprocessed_img, img, ratio = preprocess(path_to_image)
+	output_patches, centroids, heights =  contour_detection(preprocessed_img, img, ratio)
+	line_number = get_line_numbers(centroids, heights)
+
+	return output_patches, line_number
+
 
 # test
-image_path = './test/newt_1.jpeg'
-preprocessed_img, img, ratio = preprocess(image_path)
-contour_detection(preprocessed_img, img, ratio)
+image_path = './test/test1.jpeg'
+output_patches, line_number = detect_tokens(image_path)
+print(line_number)
