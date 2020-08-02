@@ -8,6 +8,7 @@ import {Menu} from './menu';
 import {Draw} from './draw/draw';
 import {Learn} from './learn/learn';
 import {Puzzle} from './puzzle/puzzle';
+import { LearnSection } from './learn/learnSection';
 
 export class App extends React.Component {
 	constructor(props) {
@@ -30,7 +31,7 @@ export class App extends React.Component {
 								<Draw />
 							</Route>
 							<Route path='/learn'>
-								<Learn />
+								<LearnSection />
 							</Route>
 							<Route path='/puzzle'>
 								<Puzzle />

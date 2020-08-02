@@ -21,7 +21,7 @@ export class ExecutionWindow extends React.Component {
 			<div style={{width:'400px', height:'400px'}}>
 				{/* {photo} */}
 				{this.props.children}
-				{!this.props.loading && controlPanel}
+				{!this.props.ready && controlPanel}
 			</div>
 		);
 	}
