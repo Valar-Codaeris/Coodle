@@ -59,11 +59,11 @@ export class LearnInterpreter extends NodeVisitor {
 				break;
 			}
 			case types.ROTCW: {
-				this.player.rotate(node.value);
+				await this.player.rotate(node.value);
 				break;
 			}
 			case types.ROTACW: {
-				this.player.rotate(-node.value);
+				await this.player.rotate(-node.value);
 				break;
 			}
 			case types.BREAK: {

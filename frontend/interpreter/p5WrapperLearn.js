@@ -27,10 +27,11 @@ export class p5WrapperLearn {
     sketch.setup = () => {
       sketch.createCanvas(this.dimension.width, this.dimension.height);
       sketch.imageMode(sketch.CENTER);
+      sketch.angleMode(sketch.DEGREES);
       sketch.background('#E71E5C');
 
       this.player.createPathGraphic(sketch);
-      this.problem = new Problem(sketch.width/10, sketch.width/10, sketch.width/5);
+      this.problem = new Problem(sketch.width/5, sketch.width/5, sketch.width/2.5);
       this.problem.createProblemCanvas(sketch);
     }
     
