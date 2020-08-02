@@ -5,6 +5,7 @@ import 'react-html5-camera-photo/build/css/index.css';
 import { Canvas, states } from './canvas';
 import UploadImage from './uploadImage';
 import axios from 'axios';
+import { Form } from 'semantic-ui-react';
 
 // Get the sample tokens
 const sample = require('../../interpreter/sample');
@@ -18,64 +19,101 @@ export class Draw extends React.Component {
 			play: false,
 			photoData: null,
 			canvasState: states.INACTIVE,
+			inputState: inputStates.INPUT,
 		};
 	}
 
 	handleTakePhotos(dataUri) {
 		console.log('photo captured');
 		// window.location = dataUri;
-		this.setState({
-			photo: true,
-			photoData: dataUri,
-			// canvasState: states.READY,
-		}, (state) => {
-			this.getTokens()
-		});
+		this.setState(
+			{
+				photo: true,
+				photoData: dataUri,
+				inputState: inputStates.LOADING,
+				// canvasState: states.READY,
+			},
+			(state) => {
+				this.getTokens();
+			}
+		);
 	}
 
 	handleImageUpload(event, file, value) {
-		console.log(file);	
+		console.log(file);
 		const reader = new FileReader();
 
-		reader.addEventListener("load", () => {
-		  // convert image file to base64 string
-		  this.setState({
-			  photoData: reader.result,
-			  photo:true,
-			//   canvasState: states.READY
-		  }, (state) => {
-			  this.getTokens()
-		  });
-		}, false);
-	  
+		reader.addEventListener(
+			'load',
+			() => {
+				// convert image file to base64 string
+				this.setState(
+					{
+						photoData: reader.result,
+						photo: true,
+						inputState: inputStates.LOADING,
+						//   canvasState: states.READY
+					},
+					(state) => {
+						this.getTokens();
+					}
+				);
+			},
+			false
+		);
+
 		if (file) {
-		  reader.readAsDataURL(file);
+			reader.readAsDataURL(file);
 		}
+	}
+
+	resetState() {
+		this.setState({
+			photo: false,
+			play: false,
+			photoData: null,
+			canvasState: states.INACTIVE,
+			inputState: inputStates.INPUT,
+		});
 	}
 
 	getTokens() {
 		// axios.get()
-		setTimeout(() => {
-			this.setState({
-				tokens: sample,
-				canvasState: states.READY
+		axios
+			.post('/api/lexer/', {
+				data: this.state.photoData,
+			})
+			.then((response) => {
+				console.log(response);
+				this.setState({
+					tokens: sample, 
+					canvasState: states.READY,
+					inputState: inputStates.READY
+				})
+			})
+			.catch((error) => {
+				console.error(error);
+				this.resetState();
 			});
-		}, 1000)
+
+		// setTimeout(() => {
+		// 	this.setState({
+		// 		tokens: sample,
+		// 		canvasState: states.READY,
+		// 		inputState: inputStates.READY,
+		// 	});
+		// }, 3000);
 	}
 
 	render() {
-		const photo = <img className="imageStyle" src={this.state.photoData} />;
-		const controlPanel = <div>
+		const photo = <img className='imageStyle' src={this.state.photoData} />;
+		const controlPanel = (
 			<div>
-
+				<div></div>
+				<div></div>
+				<div></div>
 			</div>
-			<div>
-
-			</div>
-			<div>
-
-			</div>
-		</div>
+		);
 		return (
 			<div className='drawContentStyle'>
 				{this.state.photo ? (
@@ -99,3 +137,9 @@ export class Draw extends React.Component {
 		);
 	}
 }
+
+const inputStates = {
+	INPUT: 'input',
+	LOADING: 'loading',
+	READY: 'ready',
+};

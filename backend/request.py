@@ -15,15 +15,10 @@ endpoint = 'https://coodle-card-text-detector.cognitiveservices.azure.com/'
 
 ocr_url = endpoint + "vision/v3.0/ocr"
 
-# Set image_url to the URL of an image that you want to analyze.
-image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/" + \
-    "Atomist_quote_from_Democritus.png/338px-Atomist_quote_from_Democritus.png"
-
 headers = {'Ocp-Apim-Subscription-Key': subscription_key,
            'Content-Type': 'application/octet-stream'
            }
 params = {'language': 'unk', 'detectOrientation': 'true'}
-# data = {'url': image_url}
 
 with open('./five.jpg', 'rb') as f:
     data = f.read()
@@ -32,8 +27,6 @@ response = requests.post(url=ocr_url,
                     headers=headers,
                     params=params)
 
-
-# response = requests.post(ocr_url, headers=headers, params=params, json=data)
 response.raise_for_status()
 
 analysis = response.json()
