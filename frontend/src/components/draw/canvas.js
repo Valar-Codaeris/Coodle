@@ -1,6 +1,6 @@
 import React from 'react';
-const { Interpreter } = require('../../interpreter/interpreter');
-const { Parser } = require('../../interpreter/parser');
+const { Interpreter } = require('../../../interpreter/interpreter');
+const { Parser } = require('../../../interpreter/parser');
 
 export class Canvas extends React.Component {
 	constructor(props) {
@@ -25,7 +25,7 @@ export class Canvas extends React.Component {
 		if (prevProps.state != this.props.state) {
 			this.setState({ state: this.props.state }, (state) => {
 				if (this.state.state == states.PLAY) {
-					this.interpreter.analyse(this.props.updateActiveLine);
+					this.interpreter.analyse();
 				} else if (this.state.state == states.RESET) {
 					this.interpreter.deleteSketch();
 					this.setupInterpreter();

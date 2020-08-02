@@ -160,7 +160,56 @@ const puzzleSolution = [
 		},
 	],
 ];
-
+const square = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'REPEAT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 4,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'END_REPEAT',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
 const star = [
 	[
 		{
@@ -242,7 +291,7 @@ const nestedLoop = [
 		},
 		{
 			type: 'NUMBER',
-			value: 5,
+			value: 4,
 		},
 	],
 	[
@@ -357,4 +406,4 @@ const infiniteLoop = [
 	],
 ];
 
-module.exports = {lessonSolution, nestedLoop};
+module.exports = {lessonSolution, nestedLoop, square, puzzleSolution};

@@ -3,14 +3,13 @@ import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
 import { Canvas, states } from './canvas';
-import UploadImage from './uploadImage';
+import UploadImage from '../uploadImage';
 import axios from 'axios';
-import { Form, Icon } from 'semantic-ui-react';
-import { ExecutionWindow } from './execution';
-import { types } from '../../interpreter/lexer';
+import { ExecutionWindow } from '../execution';
+import {CodeDisplay} from '../codeDisplay';
 
 // Get the sample tokens
-const {nestedLoop} = require('../../interpreter/sample');
+const { nestedLoop, square } = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
 export class Draw extends React.Component {
@@ -68,7 +67,6 @@ export class Draw extends React.Component {
 		}
 	}
 
-
 	getTokens() {
 		// axios.get()
 		axios
@@ -78,10 +76,10 @@ export class Draw extends React.Component {
 			.then((response) => {
 				console.log(response);
 				this.setState({
-					tokens: nestedLoop, 
+					tokens: nestedLoop,
 					canvasState: states.READY,
-					inputState: inputStates.READY
-				})
+					inputState: inputStates.READY,
+				});
 			})
 			.catch((error) => {
 				console.error(error);
@@ -91,16 +89,15 @@ export class Draw extends React.Component {
 
 	stop() {
 		this.setState({
-			canvasState: states.RESET
+			canvasState: states.RESET,
 		});
 	}
 
 	start() {
 		this.setState({
-			canvasState: states.PLAY
+			canvasState: states.PLAY,
 		});
 	}
-
 
 	reset() {
 		this.setState({
@@ -115,8 +112,13 @@ export class Draw extends React.Component {
 	render() {
 		return (
 			<div className='drawContentStyle'>
-				{this.state.photoData ? (	
-					<ExecutionWindow start={this.start.bind(this)} stop={this.stop.bind(this)} reset={this.reset.bind(this)} photoData={this.state.photoData}/>
+				{this.state.photoData ? (
+					<ExecutionWindow
+						start={this.start.bind(this)}
+						stop={this.stop.bind(this)}
+						reset={this.reset.bind(this)}
+						photoData={this.state.photoData}
+					/>
 				) : (
 					<div className='cameraStyle'>
 						<Camera
@@ -131,8 +133,8 @@ export class Draw extends React.Component {
 						/>
 					</div>
 				)}
-				<Canvas state={this.state.canvasState} tokens={nestedLoop} />
-				<CodeDisplay tokens={nestedLoop}/>
+				<Canvas state={this.state.canvasState} tokens={square} />
+				<CodeDisplay tokens={square} />
 			</div>
 		);
 	}
@@ -144,22 +146,3 @@ const inputStates = {
 	READY: 'ready',
 };
 
-
-export const CodeDisplay = ({tokens, activeLine}) => {
-	const tokenDisplay = tokens.map(line => {
-		const tokenList = line;
-		const command = line.map(token => {
-			let imageSource = token.type;
-			let component;
-			if(type == types.NUMBER || types.ANGLE) {
-				component = <h2>{token.value}</h2>;
-			}
-			if(!component) {
-				component = <img src={`${token.type}.png`}/>;
-			}
-			return component;
-		});
-		return <div>{command}</div>;
-	});
-	return <div>{tokenList}</div>;
-}

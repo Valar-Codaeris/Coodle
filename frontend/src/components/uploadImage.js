@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form } from 'semantic-ui-react';
 import '../styles/main.css';
+
 export default function UploadImage(props) {
     const handleImageUpload = props.handleImageUpload;
 

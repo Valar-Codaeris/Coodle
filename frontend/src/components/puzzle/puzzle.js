@@ -2,18 +2,16 @@ import React from 'react';
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
-import { Canvas, states } from './canvas';
-import UploadImage from './uploadImage';
+import { PuzzleCanvas, states } from './puzzleCanvas';
+import UploadImage from '../uploadImage';
 import axios from 'axios';
-import { Form, Icon } from 'semantic-ui-react';
-import { ExecutionWindow } from './execution';
-import { types } from '../../interpreter/lexer';
+import { ExecutionWindow } from '../execution';
 
 // Get the sample tokens
-const {nestedLoop} = require('../../interpreter/sample');
+const {puzzleSolution} = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
-export class Draw extends React.Component {
+export class Puzzle extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -70,7 +68,6 @@ export class Draw extends React.Component {
 
 
 	getTokens() {
-		// axios.get()
 		axios
 			.post('/api/lexer/', {
 				data: this.state.photoData,
@@ -78,7 +75,7 @@ export class Draw extends React.Component {
 			.then((response) => {
 				console.log(response);
 				this.setState({
-					tokens: nestedLoop, 
+					tokens: puzzleSolution, 
 					canvasState: states.READY,
 					inputState: inputStates.READY
 				})
@@ -131,8 +128,7 @@ export class Draw extends React.Component {
 						/>
 					</div>
 				)}
-				<Canvas state={this.state.canvasState} tokens={nestedLoop} />
-				<CodeDisplay tokens={nestedLoop}/>
+				<PuzzleCanvas state={this.state.canvasState} tokens={puzzleSolution} />
 			</div>
 		);
 	}
@@ -143,23 +139,3 @@ const inputStates = {
 	LOADING: 'loading',
 	READY: 'ready',
 };
-
-
-export const CodeDisplay = ({tokens, activeLine}) => {
-	const tokenDisplay = tokens.map(line => {
-		const tokenList = line;
-		const command = line.map(token => {
-			let imageSource = token.type;
-			let component;
-			if(type == types.NUMBER || types.ANGLE) {
-				component = <h2>{token.value}</h2>;
-			}
-			if(!component) {
-				component = <img src={`${token.type}.png`}/>;
-			}
-			return component;
-		});
-		return <div>{command}</div>;
-	});
-	return <div>{tokenList}</div>;
-}

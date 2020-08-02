@@ -5,9 +5,9 @@ import { Container } from 'semantic-ui-react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import {Menu} from './menu';
-import {Draw} from './draw';
+import {Draw} from './draw/draw';
 import {Learn} from './learn';
-import {Puzzle} from './puzzle';
+import {Puzzle} from './puzzle/puzzle';
 
 export class App extends React.Component {
 	constructor(props) {

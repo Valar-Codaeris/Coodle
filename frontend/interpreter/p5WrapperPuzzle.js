@@ -3,13 +3,14 @@ import { Wall } from './wall';
 
 export class p5WrapperPuzzle {
   constructor(htmlElement, player) {
-    this.sketch = new p5(this.p5instance.bind(this), htmlElement);
     this.dimension = {
 			width: 400,
 			height: 400,
     };
     this.walls = [];
     this.player = player;
+    this.sketch = new p5(this.p5instance.bind(this), htmlElement);
+
   }
 
   p5instance(sketch) {
