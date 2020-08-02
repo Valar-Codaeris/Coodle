@@ -5,10 +5,11 @@ import 'react-html5-camera-photo/build/css/index.css';
 import { Canvas, states } from './canvas';
 import UploadImage from './uploadImage';
 import axios from 'axios';
-import { Form } from 'semantic-ui-react';
+import { Form, Icon } from 'semantic-ui-react';
+import { ExecutionWindow } from './execution';
 
 // Get the sample tokens
-const sample = require('../../interpreter/sample');
+const {nestedLoop} = require('../../interpreter/sample');
 
 console.log(FACING_MODES);
 export class Draw extends React.Component {
@@ -52,7 +53,6 @@ export class Draw extends React.Component {
 						photoData: reader.result,
 						photo: true,
 						inputState: inputStates.LOADING,
-						//   canvasState: states.READY
 					},
 					(state) => {
 						this.getTokens();
@@ -67,15 +67,6 @@ export class Draw extends React.Component {
 		}
 	}
 
-	resetState() {
-		this.setState({
-			photo: false,
-			play: false,
-			photoData: null,
-			canvasState: states.INACTIVE,
-			inputState: inputStates.INPUT,
-		});
-	}
 
 	getTokens() {
 		// axios.get()
@@ -86,38 +77,45 @@ export class Draw extends React.Component {
 			.then((response) => {
 				console.log(response);
 				this.setState({
-					tokens: sample, 
+					tokens: nestedLoop, 
 					canvasState: states.READY,
 					inputState: inputStates.READY
 				})
 			})
 			.catch((error) => {
 				console.error(error);
-				this.resetState();
+				this.reset();
 			});
+	}
 
-		// setTimeout(() => {
-		// 	this.setState({
-		// 		tokens: sample,
-		// 		canvasState: states.READY,
-		// 		inputState: inputStates.READY,
-		// 	});
-		// }, 3000);
+	stop() {
+		this.setState({
+			canvasState: states.RESET
+		});
+	}
+
+	start() {
+		this.setState({
+			canvasState: states.PLAY
+		});
+	}
+
+
+	reset() {
+		this.setState({
+			photo: false,
+			play: false,
+			photoData: null,
+			canvasState: states.RESET,
+			inputState: inputStates.INPUT,
+		});
 	}
 
 	render() {
-		const photo = <img className='imageStyle' src={this.state.photoData} />;
-		const controlPanel = (
-			<div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
-		);
 		return (
 			<div className='drawContentStyle'>
-				{this.state.photo ? (
-					photo
+				{this.state.photoData ? (	
+					<ExecutionWindow start={this.start.bind(this)} stop={this.stop.bind(this)} reset={this.reset.bind(this)} photoData={this.state.photoData}/>
 				) : (
 					<div className='cameraStyle'>
 						<Camera
@@ -132,7 +130,7 @@ export class Draw extends React.Component {
 						/>
 					</div>
 				)}
-				<Canvas state={this.state.canvasState} tokens={sample} />
+				<Canvas state={this.state.canvasState} tokens={nestedLoop} />
 			</div>
 		);
 	}

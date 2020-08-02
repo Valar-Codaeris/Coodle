@@ -357,4 +357,4 @@ const infiniteLoop = [
 	],
 ];
 
-module.exports = lessonSolution;
+module.exports = {lessonSolution, nestedLoop};

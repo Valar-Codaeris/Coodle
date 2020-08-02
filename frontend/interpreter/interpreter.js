@@ -3,9 +3,8 @@
  */
 
 // const readline = require('readline');
-import {types} from './lexer';
-const {p5Wrapper} = require('./p5Wrapper');
-
+import { types } from './lexer';
+const { p5Wrapper } = require('./p5Wrapper');
 
 export class NodeVisitor {
 	constructor() {}
@@ -26,7 +25,9 @@ export class Interpreter extends NodeVisitor {
 		super();
 		this.parser = parser;
 		this.environment = {}; // declare an environment, in case we are addig global variables in the future
-		this.graphic = new p5Wrapper(htmlElement);
+		this.htmlElement = htmlElement;
+		this.node = this.parser.expression(); // Get the Abstract Syntax Tree from the Parser
+		this.graphic = new p5Wrapper(this.htmlElement);
 	}
 
 	async visitStart(node) {
@@ -73,13 +74,12 @@ export class Interpreter extends NodeVisitor {
 		}
 	}
 
-
 	async visitRepeat(node) {
 		console.log(`Repeat ${node.times} times`);
 		let times = node.times;
 		let infiniteLoop = false;
-		if(times == -1) infiniteLoop = true;
-		if(infiniteLoop) {
+		if (times == -1) infiniteLoop = true;
+		if (infiniteLoop) {
 			console.log('Started infinite loop, only break can save you :D');
 		}
 		while (times > 0 || infiniteLoop) {
@@ -97,11 +97,21 @@ export class Interpreter extends NodeVisitor {
 		}
 	}
 
+	// reset() {
+	// 	// Just create a new p5 instance for now
+	// 	this.graphic.deleteSketch();
+	// 	this.graphic = new p5Wrapper(this.htmlElement);
+	// }
+
+	deleteSketch() {
+		this.graphic.deleteSketch();
+	}
+
 	async analyse() {
 		console.log('Starting the analysis');
-		const node = this.parser.expression(); // Get the Abstract Syntax Tree from the Parser
+
 		try {
-			const result = await this.visit(node);
+			const result = await this.visit(this.node);
 		} catch (error) {
 			console.log('An error occurred while running the code');
 			console.error(error);
@@ -112,7 +122,6 @@ export class Interpreter extends NodeVisitor {
 		console.log('Ended execution');
 	}
 }
-
 
 class BreakError extends Error {
 	constructor() {

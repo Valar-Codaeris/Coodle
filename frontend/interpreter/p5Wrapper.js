@@ -15,7 +15,10 @@ export class p5Wrapper {
 			height: 400,
 		};
 	}
-
+	
+	deleteSketch() {
+		this.sketch.remove();
+	}
 	/**
 	 * Start p5 in instance mode, and make the functions, callable from outside the sketch, from the p5Wrapper class
 	 * @param {object} sketch variable which p5 passes to the function 
