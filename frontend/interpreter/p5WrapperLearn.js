@@ -9,6 +9,7 @@ export class p5WrapperLearn {
       height: 400,
     };
     this.player = player;
+    this.level = 3;
   }
 
   p5instance(sketch) {
@@ -29,8 +30,21 @@ export class p5WrapperLearn {
     
     sketch.draw = () => {
       sketch.background('#E71E5C');
-      this.problem.display(sketch);
       this.player.display(sketch);
+      switch(this.level) {
+        case 1:
+          this.problem.displayLevel1(sketch);
+          break;
+        case 2:
+          this.problem.displayLevel2(sketch);
+          break;
+        case 3:
+          this.problem.displayLevel3(sketch);
+          break;
+        case 4:
+          this.problem.displayLevel4(sketch);
+          break;
+      }
     }
   }
 }
