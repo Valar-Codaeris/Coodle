@@ -49,10 +49,11 @@ export class Stop {
  * Contains the command type, and the number value
  */
 export class Command {
-	constructor(type, value) {
+	constructor(type, value, token) {
 		console.log(value)
 		this.type = type;
 		this.value = value;
+		this.token = token;
 	}
 }
 

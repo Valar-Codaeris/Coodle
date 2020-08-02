@@ -9,8 +9,7 @@ export class ExecutionWindow extends React.Component {
 
 	render() {
         const { start, stop, reset, photoData } = this.props;
-        console.log(photoData)
-		const photo = <img className='imageStyle' src={photoData} />;
+
 		const controlPanel = (
 			<div className='controlPanel'>
 				<Icon name='repeat' circular link size="big" color="blue" onClick={reset}/>
@@ -19,9 +18,10 @@ export class ExecutionWindow extends React.Component {
 			</div>
 		);
 		return (
-			<div>
-				{photo}
-				{controlPanel}
+			<div style={{width:'400px', height:'400px'}}>
+				{/* {photo} */}
+				{this.props.children}
+				{!this.props.loading && controlPanel}
 			</div>
 		);
 	}

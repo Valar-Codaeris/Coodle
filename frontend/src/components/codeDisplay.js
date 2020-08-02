@@ -12,7 +12,7 @@ export const CodeDisplay = ({ tokens, activeLine = 0 }) => {
 			return component;
 		});
 		return (
-			<div style={activeLine == index ? commandStyle : activeCommandStyle}>
+			<div style={activeLine == index ? activeCommandStyle: commandStyle }>
 				{command}
 			</div>
 		);
@@ -21,27 +21,30 @@ export const CodeDisplay = ({ tokens, activeLine = 0 }) => {
 };
 
 const numberStyle = { 
-    display: 'inline',
-    // paddingLeft: 10,
+    display: 'flex',
     margin: 0,
-    // background: 'grey',
-    // color: 'white',
+    padding: 10,
     height: '10vh',
+    alignItems: 'center'
+
 };
 const commandStyle = {
 	display: 'flex',
 	justifyContent: 'start',
 	textAlign: 'center',
 	alignItems: 'center',
-	width: '10vw',
+    width: '10vw',
+    minWidth: '200px'
 };
 const activeCommandStyle = {
 	display: 'flex',
-	justifyContent: 'center',
+	justifyContent: 'start',
 	textAlign: 'center',
     alignItems: 'center',
-    border: '1px solid grey'
+    border: '2px solid green',
+    minWidth: '200px'
 };
+
 const tokenStyle = {
 	height: '10vh',
 };
@@ -49,5 +52,11 @@ const codeStyle = {
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'start',
-	alignItems: 'start',
+    alignItems: 'start',
+    background: 'white',
+    height: '400px',
+    width: '400px',
+    overflowY:'scroll',
+    border: '1px solid grey',
+    padding: 10
 };

@@ -54,7 +54,13 @@ export class p5Wrapper {
 			sketch.background('#E71E5C');
 			sketch.drawPath();
 			sketch.image(this.pathGraphic, this.dimensions.width/2, this.dimensions.height/2);
-			sketch.image(this.mascot, this.x, this.y, 30, 30);
+		
+			// Draw the doggy
+			sketch.push();
+			sketch.translate(this.x, this.y);
+			sketch.rotate(this.angle);
+			sketch.image(this.mascot,0,0, 45, 45);
+			sketch.pop();
 		};
 
 		/**
@@ -94,8 +100,25 @@ export class p5Wrapper {
 		 * Changes the angle of rotation
 		 * @param {number} angle 
 		 */
-		this.rotate = (angle) => {
-			this.angle = (this.angle + angle) % 360;
+		this.rotate = async (angle) => {
+			const increment = 0.01*angle;
+			const oldAngle = this.angle;
+			let angleCopy = angle;
+			let promise = new Promise((resolve, reject) => {
+				const moveStep = () => {
+					this.angle = (this.angle + increment)%360;
+					angleCopy = angleCopy - increment;
+					if(angleCopy < 0) {
+						this.angle = (oldAngle + angle) % 360; //prevent decimal problems
+						resolve();
+					}
+					else {
+						requestAnimationFrame(moveStep);
+					}
+				}
+				requestAnimationFrame(moveStep);
+			});
+			return promise;
 		};
 	}
 }

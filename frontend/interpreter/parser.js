@@ -30,48 +30,54 @@ export class Parser {
 		let value = 0;
 		switch (this.currToken.type) {
 			case types.FRONT: {
+				const token = this.currToken;
 				this.eat(types.FRONT); // eat the front token
 				if (this.currToken) value = this.currToken.value; // get the value from the next token
 				this.eat(types.NUMBER);
 
-				node = new Command(types.FRONT, value);
+				node = new Command(types.FRONT, value, token);
 				break;
 			}
 
 			case types.BACK: {
+				const token = this.currToken;
 				this.eat(types.FRONT); // eat the front token
 				if (this.currToken) value = this.currToken.value; // get the value from the next token
 				this.eat(types.NUMBER);
 
-				node = new Command(types.BACK, value);
+				node = new Command(types.BACK, value, token);
 				break;
 			}
 
 			case types.ROTCW: {
+				const token = this.currToken;
 				this.eat(types.ROTCW);
 				if (this.currToken) value = this.currToken.value;
 				this.eat(types.ANGLE);
 
-				node = new Command(types.ROTCW, value);
+				node = new Command(types.ROTCW, value, token);
 				break;
 			}
 
 			case types.ROTACW: {
+				const token = this.currToken;
 				this.eat(types.ROTACW);
 				if (this.currToken) value = this.currToken.value;
 				this.eat(types.ANGLE);
 
-				node = new Command(types.ROTACW, value);
+				node = new Command(types.ROTACW, value, token);
 				break;
 			}
 
 			case types.BREAK: {
+				const token = this.currToken;
 				this.eat(types.BREAK);
-				node = new Command(types.BREAK);
+				node = new Command(types.BREAK, null, token);
 				break;
 			}
 
 			default: {
+				const token = this.currToken;
 				this.error('Invalid token detected in place of statement');
 			}
 		}
