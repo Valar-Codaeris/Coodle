@@ -15,7 +15,7 @@ export class p5WrapperPuzzle {
   p5instance(sketch) {
     sketch.preload = () => {
       const mascot = sketch.loadImage('assets/beagle.png');
-      this.player.configurePlayer(this.dimension.width/2, this.dimension.height/2, 0, mascot);
+      this.player.configurePlayer(this.dimension.width/8, 3*this.dimension.height/4, -90, mascot);
     }
 
     sketch.setup = () => {      
