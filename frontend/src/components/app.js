@@ -5,7 +5,7 @@ import { Container } from 'semantic-ui-react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import {Menu} from './menu';
-import {Play} from './play';
+import {Draw} from './draw';
 import {Learn} from './learn';
 import {Puzzle} from './puzzle';
 
@@ -18,6 +18,7 @@ export class App extends React.Component {
 		return (
 			<div>
 				<Header />
+				
 				<div style={backgroundStyle}>
 					<img src="/assets/background1.png" style={backgroundImageStyle1}/>
 					<img src="/assets/background2.png" style={backgroundImageStyle2}/>
@@ -25,8 +26,8 @@ export class App extends React.Component {
 				<div id="content">
 					<Router>
 						<Switch>
-							<Route path='/play'>
-								<Play />
+							<Route path='/draw'>
+								<Draw />
 							</Route>
 							<Route path='/learn'>
 								<Learn />
@@ -55,18 +56,21 @@ const backgroundStyle = {
     left: 0,
     right: 0,
     marginLeft: 'auto',
-    marginRight: 'auto'
+	marginRight: 'auto',
+	zIndex: -100
 }
 const backgroundImageStyle1 = {
     position:'absolute',
     height: '60vh',
     top: 20,
-    left: 100
+	left: 100,
+	zIndex: -100
 }
 
 const backgroundImageStyle2 = {
     position: 'absolute',
     height: '60vh',
     bottom: 10,
-    right: 170
+	right: 170,
+	zIndex: -100
 }

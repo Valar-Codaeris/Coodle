@@ -8,6 +8,9 @@ module.exports = {
 	},
 	devServer: {
 		contentBase: './output',
+		historyApiFallback : {
+			index: 'index.html'
+		}
 	},
 	module: {
 		rules: [

@@ -26,3 +26,51 @@ body {
 	justify-content: center;
 	align-items: center;
 }
+
+.drawContentStyle {
+	height: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 55vw;
+	min-width: 350px;
+	flex-wrap: wrap;
+}
+.cameraStyle {
+	
+}
+.cameraStyle{
+		position: relative;
+		height: 400px;
+		width:  400px;
+}
+
+.imageStyle {
+	height: 400px;
+	width:  400px;
+}
+.cameraStyle video{
+	position: relative;
+	background-color: black;
+	height: 400px;
+	width:  400px;
+}
+
+.canvasStyle {
+	height: 400px;
+}
+
+.inputLabel {
+	z-index: 1000;
+}
+
+.inputFile {
+	display: none;
+}
+
+.uploadForm {
+	position: absolute;
+	padding: 5px;
+	bottom: 0;
+	right: 0;
+}

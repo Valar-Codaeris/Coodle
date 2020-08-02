@@ -4,8 +4,8 @@
 
 // const readline = require('readline');
 import {types} from './lexer';
-const {p5Wrapper} = require('./p5Wrapper');
-
+import { p5WrapperPuzzle } from './p5WrapperPuzzle';
+import { Player } from './player';
 
 export class NodeVisitor {
 	constructor() {}
@@ -26,7 +26,8 @@ export class Interpreter extends NodeVisitor {
 		super();
 		this.parser = parser;
 		this.environment = {}; // declare an environment, in case we are addig global variables in the future
-		this.graphic = new p5Wrapper(htmlElement);
+		this.player = new Player();
+		this.graphic = new p5WrapperPuzzle(htmlElement, this.player);
 	}
 
 	async visitStart(node) {
@@ -48,19 +49,19 @@ export class Interpreter extends NodeVisitor {
 		console.log(types);
 		switch (node.type) {
 			case types.FRONT: {
-				await this.graphic.move(node.value);
+				await this.player.move(node.value);
 				break;
 			}
 			case types.BACK: {
-				this.graphic.move(-node.value);
+				this.player.move(-node.value);
 				break;
 			}
 			case types.ROTCW: {
-				this.graphic.rotate(node.value);
+				this.player.rotate(node.value);
 				break;
 			}
 			case types.ROTACW: {
-				this.graphic.rotate(-node.value);
+				this.player.rotate(-node.value);
 				break;
 			}
 			case types.BREAK: {

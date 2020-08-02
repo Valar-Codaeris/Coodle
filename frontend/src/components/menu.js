@@ -23,7 +23,7 @@ export const Menu = () => {
 							</Button>
 						</Link>
 
-						<Link to='/play'>
+						<Link to='/draw'>
 							<Button style={buttonStyle} inverted color='blue'>
 								Draw
 							</Button>
