@@ -98,6 +98,6 @@ def TokenGenerator(img_path):
 	return sequence
 
 # test
-image = cv2.imread("./test/test.jpg")
-sequence = TokenGenerator(image)
-print(sequence)
+#image = cv2.imread("./test/test.jpg")
+#sequence = TokenGenerator(image)
+#print(sequence)
