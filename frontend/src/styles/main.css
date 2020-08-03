@@ -40,22 +40,23 @@ body {
 .cameraStyle {
 	
 }
-.cameraStyle{
-		position: relative;
-		height: 400px;
-		width:  400px;
+.cameraStyle {
+	position: relative;
+	height: 400px;
+	width: 400px;
 }
 
 .imageStyle {
 	height: 400px;
-	width:  400px;
+	width: 400px;
 	opacity: 0.7;
 }
-.cameraStyle video{
+.cameraStyle video {
 	position: relative;
 	background-color: black;
 	height: 400px;
-	width:  400px;
+	width: 400px;
+
 }
 
 .canvasStyle {
@@ -80,4 +81,27 @@ body {
 .controlPanel {
 	display: flex;
 	justify-content: center;
+}
+
+.learnContentStyle {
+	height: 60vh;
+	display: flex;
+	/* flex-direction: column; */
+	justify-content: space-around;
+	align-items: space-around;
+	/* width: 55vw; */
+	min-width: 350px;
+	flex-wrap: wrap;
+	background: 'white';
+}
+
+.descriptionStyle {
+	margin: '20px';
+	/* display: 'flex';
+	justify-content: center;
+	align-items: space-around; */
+}
+
+.dropdownStyle {
+	margin: '20px'
 }

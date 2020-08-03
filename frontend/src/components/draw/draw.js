@@ -35,7 +35,6 @@ export class Draw extends React.Component {
 				photo: true,
 				photoData: dataUri,
 				inputState: inputStates.IMAGE,
-				// canvasState: states.READY,
 			}
 			// (state) => {
 			// 	this.getTokens();
@@ -146,9 +145,8 @@ export class Draw extends React.Component {
 					<img
 					className='imageStyle'
 					src={this.state.photoData}
-					onClick={this.getTokens.bind(this)}
 				/>
-					<Icon style={compileStyle} link size="huge" name="cogs" />
+					<Icon style={compileStyle} link size="huge" name="cogs" onClick={this.getTokens.bind(this)}/>
 					</div>
 			);
 		} else if (
@@ -186,7 +184,7 @@ export class Draw extends React.Component {
 						stop={this.stop.bind(this)}
 						reset={this.reset.bind(this)}
 						photoData={this.state.photoData}
-						loading={this.state.inputState == inputStates.LOADING}
+						ready={this.state.inputState == inputStates.LOADING || this.state.inputState == inputStates.IMAGE}
 					>
 						{' '}
 						{component}{' '}

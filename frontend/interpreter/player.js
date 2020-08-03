@@ -18,7 +18,15 @@ export class Player {
   display(sketch) {
     this.pathGraphic.circle(this.x, this.y, 5);
     sketch.image(this.pathGraphic, sketch.width/2, sketch.height/2);
-    sketch.image(this.mascot, this.x, this.y, 30, 30);
+    
+    // Draw the doggy
+    sketch.push();
+    sketch.translate(this.x, this.y);
+    sketch.rotate(this.angle);
+    sketch.image(this.mascot,0,0, 45, 45);
+    sketch.pop();
+
+    // sketch.image(this.mascot, this.x, this.y, 30, 30);
   };
 
   /**
@@ -51,7 +59,29 @@ export class Player {
    * Changes the angle of rotation
    * @param {number} angle 
    */
-  rotate(angle) {
-    this.angle = (this.angle + angle) % 360;
-  }
+		/**
+		 * Changes the angle of rotation
+		 * @param {number} angle 
+		 */
+		async rotate (angle) {
+      console.log('called');
+			const increment = 0.01*angle;
+			const oldAngle = this.angle;
+			let angleCopy = angle;
+			let promise = new Promise((resolve, reject) => {
+				const moveStep = () => {
+					this.angle = (this.angle + increment)%360;
+					angleCopy = angleCopy - increment;
+					if(angleCopy < 0) {
+						this.angle = (oldAngle + angle) % 360; //prevent decimal problems
+						resolve();
+					}
+					else {
+						requestAnimationFrame(moveStep);
+					}
+				}
+				requestAnimationFrame(moveStep);
+			});
+			return promise;
+		};
 }
