@@ -3,7 +3,7 @@ import base64
 import numpy as np
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from block_sequence_detection.text_detector import TokenGenerator
+from .text_detector import TokenGenerator
 
 
 @api_view(['GET', 'POST'])
