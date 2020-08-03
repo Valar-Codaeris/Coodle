@@ -8,7 +8,12 @@ export const Triangle = () => {
         <Segment className="descriptionStyle">
 
 				<h2>I am a 'tri' angle and I have three angles !!</h2>
+				<p2>
 
+				</p2>
+				<p2>
+					
+				</p2>
         </Segment>
 	);
 };

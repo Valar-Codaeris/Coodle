@@ -5,6 +5,7 @@ import Line from './details/line';
 import Triangle from './details/triangle';
 
 import { Switch, Route, Link } from 'react-router-dom';
+import Square from './details/square';
 
 export const LearnDescription = ({ list }) => {
 	return (
@@ -18,6 +19,9 @@ export const LearnDescription = ({ list }) => {
 				</Route>
 				<Route path='/learn/triangle'>
 					<Triangle />
+				</Route>
+				<Route path='/learn/square'>
+					<Square />
 				</Route>
 			</Switch>
 		</div>

@@ -25,7 +25,7 @@ export class LearnSection extends React.Component {
         })
     }
     render() {
-        return <div><Grid  columns="equal">
+        return <div style={sectionStyle}><Grid  columns="equal">
             <Grid.Column style={studyStyle}>
                 <LearnList list={this.state.learnList} onChoose={this.chooseLevel.bind(this)}/>
                 <LearnDescription list={this.state.learnList}/>
@@ -50,7 +50,11 @@ const studyStyle = {
     width: '50vw',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'start',
+    justifyContent: 'space-around',
     alignItems: 'space-around',
 
+};
+
+const sectionStyle = {
+    height: '100%'
 }

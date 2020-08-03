@@ -96,7 +96,10 @@ body {
 }
 
 .descriptionStyle {
-	margin: '20px'
+	margin: '20px';
+	/* display: 'flex';
+	justify-content: center;
+	align-items: space-around; */
 }
 
 .dropdownStyle {
