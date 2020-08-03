@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 
 // Get the sample tokens
-const {puzzleSolution} = require('../../../interpreter/sample');
+const {puzzleSolution1} = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
 export class Puzzle extends React.Component {
@@ -75,7 +75,7 @@ export class Puzzle extends React.Component {
 			.then((response) => {
 				console.log(response);
 				this.setState({
-					tokens: puzzleSolution, 
+					tokens: puzzleSolution1,
 					canvasState: states.READY,
 					inputState: inputStates.READY
 				})
@@ -84,7 +84,7 @@ export class Puzzle extends React.Component {
 				// console.error(error);
 				// this.reset();
 				this.setState({
-					tokens: puzzleSolution, 
+					tokens: puzzleSolution1, 
 					canvasState: states.READY,
 					inputState: inputStates.READY
 				})
@@ -133,7 +133,7 @@ export class Puzzle extends React.Component {
 						/>
 					</div>
 				)}
-				<PuzzleCanvas state={this.state.canvasState} tokens={puzzleSolution} />
+				<PuzzleCanvas state={this.state.canvasState} tokens={puzzleSolution1} />
 			</div>
 		);
 	}

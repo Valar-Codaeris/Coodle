@@ -25,15 +25,31 @@ export class Wall {
 
   detectCollision(object) {
     //Detect whether the object's position lies within the bounds of the wall
-    if((object.x <= this.x + this.weight/2) && (object.x >= this.x - this.weight)) {
-      if(this.length > 0) {
-        if((object.y >= this.y) && (object.y <= this.y + this.length)) {
-          console.log('Collision Detected');
-        } 
+    if(this.axis == 'y') {
+      if((object.x <= this.x + this.weight/2) && (object.x >= this.x - this.weight)) {
+        if(this.length > 0) {
+          if((object.y >= this.y) && (object.y <= this.y + this.length)) {
+            console.log('Collision Detected');
+          } 
+        }
+        else {
+          if((object.y <= this.y) && (object.y >= this.y + this.length)) {
+            console.log('Collision Detected');
+          }
+        }
       }
-      else {
-        if((object.y <= this.y) && (object.y >= this.y + this.length)) {
-          console.log('Collision Detected');
+    }
+    else {
+      if((object.y <= this.y + this.weight/2) && (object.y >= this.y - this.weight)) {
+        if(this.length > 0) {
+          if((object.x >= this.x) && (object.x <= this.x + this.length)) {
+            console.log('Collision Detected');
+          } 
+        }
+        else {
+          if((object.x <= this.x) && (object.x >= this.x + this.length)) {
+            console.log('Collision Detected');
+          }
         }
       }
     }
