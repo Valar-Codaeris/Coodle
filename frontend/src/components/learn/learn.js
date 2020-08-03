@@ -11,7 +11,7 @@ import { CodeDisplay } from '../codeDisplay';
 
 import { Loader } from 'semantic-ui-react';
 // Get the sample tokens
-const { nestedLoop, square } = require('../../../interpreter/sample');
+const {learnSolution1, learnSolution2, learnSolution3, learnSolution4 } = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
 export class Learn extends React.Component {
@@ -25,6 +25,7 @@ export class Learn extends React.Component {
 			canvasState: states.INACTIVE,
 			inputState: inputStates.INPUT,
 			activeLine: 0,
+			tokens: null
 		};
 	}
 
@@ -61,6 +62,24 @@ export class Learn extends React.Component {
 
 	getTokens() {
 		// axios.get()
+		let tokens;
+		switch(this.props.level) {
+			case 1:
+				tokens = learnSolution1;
+				break;
+			case 2:
+				tokens = learnSolution2;
+				break;
+			case 3:
+				tokens = learnSolution3;
+				break;
+			case 4:
+				tokens = learnSolution4;
+				break;
+			default:
+				tokens = learnSolution1;
+				break;
+		}
 		this.setState({
 			inputState: inputStates.LOADING,
 		});
@@ -71,8 +90,9 @@ export class Learn extends React.Component {
 			.then((response) => {
 				console.log(response);
 				setTimeout(() => {
+					
 					this.setState({
-						tokens: square,
+						tokens: tokens,
 						canvasState: states.READY,
 						inputState: inputStates.READY,
 					});
@@ -80,7 +100,7 @@ export class Learn extends React.Component {
 			})
 			.catch((error) => {
 				this.setState({
-					tokens: nestedLoop,
+					tokens: tokens,
 					canvasState: states.READY,
 					inputState: inputStates.READY,
 				});
@@ -163,7 +183,7 @@ export class Learn extends React.Component {
 			component = (
 				<CodeDisplay
 					state={this.state.canvasState}
-					tokens={square}
+					tokens={this.state.tokens}
 					activeLine={this.state.activeLine}
 				/>
 			);

@@ -25,7 +25,7 @@ export class Canvas extends React.Component {
 		if (prevProps.state != this.props.state) {
 			this.setState({ state: this.props.state }, (state) => {
 				if (this.state.state == states.PLAY) {
-					this.parser = new Parser(this.tokens);
+					this.parser = new Parser(this.props.tokens);
 					this.interpreter.attachParser(this.parser);
 					this.interpreter.analyse(this.props.updateActiveLine);
 

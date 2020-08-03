@@ -16,7 +16,7 @@ export class Problem {
   }
   
   displayLevel1(sketch) {
-    this.problemCanvas.line(this.size/4, this.size/2, 3*this.size/4, this.size/2);
+    this.problemCanvas.line(this.size/2, this.size/2, this.size/2, 3*this.size/4);
     sketch.image(this.problemCanvas, this.x, this.y);
   }
 

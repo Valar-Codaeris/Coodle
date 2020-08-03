@@ -24,6 +24,7 @@ export class Draw extends React.Component {
 			canvasState: states.INACTIVE,
 			inputState: inputStates.INPUT,
 			activeLine: 0,
+			tokens: null
 		};
 	}
 
@@ -82,7 +83,7 @@ export class Draw extends React.Component {
 				console.log(response);
 				setTimeout(() => {
 					this.setState({
-						tokens: nestedLoop,
+						tokens: square,
 						canvasState: states.READY,
 						inputState: inputStates.READY,
 					});
@@ -92,7 +93,7 @@ export class Draw extends React.Component {
 				// console.error(error);
 				// this.reset();
 				this.setState({
-					tokens: nestedLoop,
+					tokens: square,
 					canvasState: states.READY,
 					inputState: inputStates.READY,
 				});
@@ -205,7 +206,7 @@ export class Draw extends React.Component {
 				)}
 				<Canvas
 					state={this.state.canvasState}
-					tokens={square}
+					tokens={this.state.tokens}
 					updateActiveLine={this.updateActiveLine.bind(this)}
 				/>
 			</div>

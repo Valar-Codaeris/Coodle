@@ -49,7 +49,7 @@ export const learnSolution2 = [
 	],
 	[
 		{
-			type: 'ROTATE',
+			type: 'ROTATE_CLOCKWISE',
 			value: null,
 		},
 		{
@@ -90,7 +90,7 @@ export const learnSolution3 = [
 	],
 	[
 		{
-			type: 'ROTATE',
+			type: 'ROTATE_CLOCWISE',
 			value: null,
 		},
 		{
