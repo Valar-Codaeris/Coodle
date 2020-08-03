@@ -22,14 +22,19 @@ export class NodeVisitor {
 
 export class PuzzleInterpreter extends NodeVisitor {
 	// The most important class
-	constructor(parser, htmlElement) {
+	constructor(htmlElement, level) {
 		super();
-		this.parser = parser;
 		this.environment = {}; // declare an environment, in case we are addig global variables in the future
 		this.player = new Player();
-		this.graphic = new p5WrapperPuzzle(htmlElement, this.player, 1);
+		this.graphic = new p5WrapperPuzzle(htmlElement, this.player, level);
 	}
 
+	attachParser(parser) {
+		this.parser = parser;
+	}
+	deleteSketch() {
+		this.graphic.deleteSketch();
+	}
 	async visitStart(node) {
 		console.log('Starting program execution');
 	}
@@ -47,21 +52,23 @@ export class PuzzleInterpreter extends NodeVisitor {
 	async visitCommand(node) {
 		console.log('Executing command', node);
 		console.log(types);
+		this.updateActiveLine(node.token.line);
 		switch (node.type) {
 			case types.FRONT: {
 				await this.player.move(node.value);
 				break;
 			}
 			case types.BACK: {
-				this.player.move(-node.value);
+				await this.player.move(-node.value);
 				break;
 			}
 			case types.ROTCW: {
-				this.player.rotate(node.value);
+				await this.player.rotate(node.value);
 				break;
 			}
 			case types.ROTACW: {
-				this.player.rotate(-node.value);
+				console.log('here');
+				await this.player.rotate(-node.value);
 				break;
 			}
 			case types.BREAK: {
@@ -98,7 +105,8 @@ export class PuzzleInterpreter extends NodeVisitor {
 		}
 	}
 
-	async analyse() {
+	async analyse(updateActiveLine) {
+		this.updateActiveLine = updateActiveLine;
 		console.log('Starting the analysis');
 		const node = this.parser.expression(); // Get the Abstract Syntax Tree from the Parser
 		try {

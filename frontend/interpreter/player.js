@@ -22,6 +22,7 @@ export class Player {
     // Draw the doggy
     sketch.push();
     sketch.translate(this.x, this.y);
+    sketch.angleMode(sketch.DEGREES);
     sketch.rotate(this.angle);
     sketch.image(this.mascot,0,0, 45, 45);
     sketch.pop();
@@ -72,7 +73,7 @@ export class Player {
 				const moveStep = () => {
 					this.angle = (this.angle + increment)%360;
 					angleCopy = angleCopy - increment;
-					if(angleCopy < 0) {
+					if((increment > 0 && angleCopy < 0) || (increment < 0 && angleCopy >0)) {
 						this.angle = (oldAngle + angle) % 360; //prevent decimal problems
 						resolve();
 					}

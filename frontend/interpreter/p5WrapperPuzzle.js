@@ -2,7 +2,7 @@ import p5 from 'p5';
 import { Puzzle } from './puzzle';
 
 export class p5WrapperPuzzle {
-  constructor(htmlElement, player, level) {
+  constructor(htmlElement, player, level=1) {
     this.dimension = {
 			width: 400,
 			height: 400,
@@ -19,9 +19,12 @@ export class p5WrapperPuzzle {
       const mascot = sketch.loadImage('assets/beagle.png');
       this.player.configurePlayer(this.dimension.width/8, 3*this.dimension.height/4, -90, mascot);
     }
-
+    this.deleteSketch = () => {
+      sketch.remove();
+    }
     sketch.setup = () => {      
       sketch.createCanvas(this.dimension.width, this.dimension.height);
+      sketch.angleMode(sketch.DEGREES);
       sketch.imageMode(sketch.CENTER);
       sketch.background('#E71E5C');
       

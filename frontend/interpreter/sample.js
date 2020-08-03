@@ -173,7 +173,7 @@ export const learnSolution4 = [
 	],
 ];
 
-export const puzzleSolution1 = [
+export const puzzleSolution3 = [
 	[
 		{
 			type: 'START',
@@ -192,12 +192,12 @@ export const puzzleSolution1 = [
 	],
 	[
 		{
-			type: 'ROTATE_CLOCKWISE',
+			type: 'ROTATE_ANTICLOCKWISE',
 			value: null,
 		},
 		{
 			type: 'ANGLE',
-			value: 270,
+			value: 90,
 		},
 	],
 	[
@@ -252,12 +252,12 @@ export const puzzleSolution1 = [
 	],
 	[
 		{
-			type: 'ROTATE_CLOCKWISE',
+			type: 'ROTATE_ANTICLOCKWISE',
 			value: null,
 		},
 		{
 			type: 'ANGLE',
-			value: 270,
+			value: 90,
 		},
 	],
 	[
