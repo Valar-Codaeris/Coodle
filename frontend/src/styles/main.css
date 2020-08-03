@@ -37,9 +37,7 @@ body {
 	flex-wrap: wrap;
 	background: 'white';
 }
-.cameraStyle {
-	
-}
+
 .cameraStyle {
 	position: relative;
 	height: 400px;
@@ -104,4 +102,23 @@ body {
 
 .dropdownStyle {
 	margin: '20px'
+}
+
+.learnCameraStyle {
+	position: relative;
+	height: 400px;
+	width: 400px;
+}
+
+.learnCameraStyle video {
+	position: relative;
+	background-color: black;
+	height: 400px;
+	width: 400px;
+	margin-top: 20px;
+}
+
+.learnCanvasStyle {
+	height: 400px;
+	margin: 200px;
 }

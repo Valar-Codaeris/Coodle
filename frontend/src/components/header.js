@@ -19,7 +19,7 @@ const boxStyle = {
 	border: 'none',
 	alignItems: 'center',
     justifyContent: 'space-between',
-    height: '9vh',
+    height: '7vh',
 };
 
 const brandStyle = {

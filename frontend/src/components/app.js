@@ -17,7 +17,7 @@ export class App extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={mainStyle}>
 				<Header />
 				
 				<div style={backgroundStyle}>
@@ -74,4 +74,14 @@ const backgroundImageStyle2 = {
     bottom: 10,
 	right: 170,
 	zIndex: -100
+}
+
+
+const mainStyle = {
+	height: '100vh',
+	width: '100vw',
+	overflowY: 'hidden',
+	overflowX: 'hidden',
+	padding: 0,
+	margin: 0
 }

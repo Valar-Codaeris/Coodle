@@ -25,36 +25,44 @@ export class LearnSection extends React.Component {
         })
     }
     render() {
-        return <div style={sectionStyle}><Grid  columns="equal">
+        return <div style={sectionStyle}>
+            <Grid  columns="equal">
             <Grid.Column style={studyStyle}>
                 <LearnList list={this.state.learnList} onChoose={this.chooseLevel.bind(this)}/>
                 <LearnDescription list={this.state.learnList}/>
             </Grid.Column >
 
             <Grid.Column style={executeStyle}>
-                <Learn level={this.state.level}/>
+                <Learn  level={this.state.level}/>
             </Grid.Column>
             
-        </Grid><Divider style={{zIndex: -1}} vertical><Icon name="book" size="huge"/></Divider></div>
+        </Grid></div>
     }
 
 }
 
 
 const executeStyle = {
-    width: '50vw'
+    width: '48vw',
+    overflowY: 'scroll',
+    height: '80vh',
+    padding: 0,
+    margin: 0
 };
 
 const studyStyle = {
     // background: 'white',
-    width: '50vw',
+    width: '48vw',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'space-around',
+    padding: 0,
+    margin: 0
 
 };
 
 const sectionStyle = {
-    height: '100%'
+    height: '80vh',
+
 }

@@ -21,7 +21,7 @@ export class Canvas extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		console.log('canvas state updated', this.props.state);
+		console.log('canvas state updated', this.props.state, this.props.level);
 		if (prevProps.state != this.props.state || prevProps.level != this.props.level) {
 			console.log(prevProps.level, this.props.level);
 			this.setState({ state: this.props.state }, (state) => {
@@ -33,8 +33,7 @@ export class Canvas extends React.Component {
 				} else if (this.state.state == states.RESET) {
 					this.interpreter.deleteSketch();
 					this.setupInterpreter();
-				}
-				else if(prevProps.level != this.props.level) {
+				} else if (this.state.state == states.INACTIVE) {
 					if(this.interpreter) this.interpreter.deleteSketch();
 					this.setupInterpreter();
 				}
@@ -44,7 +43,7 @@ export class Canvas extends React.Component {
 	}
 
 	render() {
-		return <div className='canvasStyle' ref={this.myRef} />;
+		return <div className='learnCanvasStyle' ref={this.myRef} />;
 	}
 }
 

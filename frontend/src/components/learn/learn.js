@@ -122,6 +122,22 @@ export class Learn extends React.Component {
 		});
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if(prevProps.level != this.props.level) {
+			console.log('Changed the level');	
+			if(prevProps.level) this.reset();
+			else {
+				this.setState({
+					canvasState: states.INACTIVE, // set as inactive
+					inputState: inputStates.INPUT, // set as input
+					photo: false,
+					play: false,
+					photoData: null,
+					activeLine: 0,
+				});
+			}
+		}
+	}
 	render() {
 		let component;
 		if (this.state.inputState == inputStates.LOADING) {
@@ -132,7 +148,6 @@ export class Learn extends React.Component {
 				</div>
 			);
 		} else if (this.state.inputState == inputStates.IMAGE) {
-			console.log('here');
 			component = (
 				<div style={imageStyle}>
 					<img
@@ -183,7 +198,7 @@ export class Learn extends React.Component {
 						{component}{' '}
 					</ExecutionWindow>
 				) : (
-					<div className='cameraStyle'>
+					<div className='learnCameraStyle'>
 						<Camera
 							isImageMirror={false}
 							idealResolution={{ width: 640, height: 480 }}

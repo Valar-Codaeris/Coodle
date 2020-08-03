@@ -48,7 +48,7 @@ export class LearnInterpreter extends NodeVisitor {
 
 	async visitCommand(node) {
 		console.log('Executing command', node);
-		console.log(types);
+		this.updateActiveLine(node.token.line);
 		switch (node.type) {
 			case types.FRONT: {
 				await this.player.move(node.value);
@@ -103,9 +103,10 @@ export class LearnInterpreter extends NodeVisitor {
 		}
 	}
 
-	async analyse() {
+	async analyse(updateActiveLine) {
 		console.log('Starting the analysis');
 		const node = this.parser.expression(); // Get the Abstract Syntax Tree from the Parser
+		this.updateActiveLine = updateActiveLine;
 		try {
 			const result = await this.visit(node);
 		} catch (error) {
