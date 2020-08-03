@@ -1,7 +1,7 @@
 import React from 'react';
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
-import {Icon} from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 
 import { Canvas, states } from './learnCanvas';
 import UploadImage from '../uploadImage';
@@ -30,13 +30,11 @@ export class Learn extends React.Component {
 
 	handleTakePhotos(dataUri) {
 		console.log('photo captured');
-		this.setState(
-			{
-				photo: true,
-				photoData: dataUri,
-				inputState: inputStates.IMAGE,
-			}
-		);
+		this.setState({
+			photo: true,
+			photoData: dataUri,
+			inputState: inputStates.IMAGE,
+		});
 	}
 
 	handleImageUpload(event, file, value) {
@@ -47,13 +45,11 @@ export class Learn extends React.Component {
 			'load',
 			() => {
 				// convert image file to base64 string
-				this.setState(
-					{
-						photoData: reader.result,
-						photo: true,
-						inputState: inputStates.IMAGE,
-					}
-				);
+				this.setState({
+					photoData: reader.result,
+					photo: true,
+					inputState: inputStates.IMAGE,
+				});
 			},
 			false
 		);
@@ -83,7 +79,6 @@ export class Learn extends React.Component {
 				}, 3000);
 			})
 			.catch((error) => {
-
 				this.setState({
 					tokens: nestedLoop,
 					canvasState: states.READY,
@@ -123,9 +118,9 @@ export class Learn extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(prevProps.level != this.props.level) {
-			console.log('Changed the level');	
-			if(prevProps.level) this.reset();
+		if (prevProps.level != this.props.level) {
+			console.log('Changed the level');
+			if (prevProps.level) this.reset();
 			else {
 				this.setState({
 					canvasState: states.INACTIVE, // set as inactive
@@ -150,12 +145,15 @@ export class Learn extends React.Component {
 		} else if (this.state.inputState == inputStates.IMAGE) {
 			component = (
 				<div style={imageStyle}>
-					<img
-					className='imageStyle'
-					src={this.state.photoData}
-				/>
-					<Icon style={compileStyle} link size="huge" name="cogs" onClick={this.getTokens.bind(this)}/>
-					</div>
+					<img className='imageStyle' src={this.state.photoData} />
+					<Icon
+						style={compileStyle}
+						link
+						size='huge'
+						name='cogs'
+						onClick={this.getTokens.bind(this)}
+					/>
+				</div>
 			);
 		} else if (
 			this.state.canvasState == states.READY ||
@@ -186,13 +184,22 @@ export class Learn extends React.Component {
 
 		return (
 			<div className='learnContentStyle'>
+				<Canvas
+					state={this.state.canvasState}
+					tokens={this.state.tokens}
+					level={this.props.level}
+					updateActiveLine={this.updateActiveLine.bind(this)}
+				/>
 				{this.state.photoData ? (
 					<ExecutionWindow
 						start={this.start.bind(this)}
 						stop={this.stop.bind(this)}
 						reset={this.reset.bind(this)}
 						photoData={this.state.photoData}
-						ready={this.state.inputState == inputStates.LOADING || this.state.inputState == inputStates.IMAGE}
+						ready={
+							this.state.inputState == inputStates.LOADING ||
+							this.state.inputState == inputStates.IMAGE
+						}
 					>
 						{' '}
 						{component}{' '}
@@ -211,12 +218,6 @@ export class Learn extends React.Component {
 						/>
 					</div>
 				)}
-				<Canvas
-					state={this.state.canvasState}
-					tokens={this.state.tokens}
-					level={this.props.level}
-					updateActiveLine={this.updateActiveLine.bind(this)}
-				/>
 			</div>
 		);
 	}
@@ -226,7 +227,7 @@ const inputStates = {
 	INPUT: 'input',
 	LOADING: 'loading',
 	READY: 'ready',
-	IMAGE: 'image'
+	IMAGE: 'image',
 };
 
 const loaderStyle = {
@@ -237,18 +238,18 @@ const loaderStyle = {
 	width: '400px',
 	height: '400px',
 	background: 'white',
-	border: '2px solid grey'
+	border: '2px solid grey',
 };
 
 const imageStyle = {
 	position: 'relative',
 	height: '400px',
 	width: '400px',
-	background: 'white'
+	background: 'white',
 };
 
 const compileStyle = {
 	position: 'absolute',
 	top: '200px',
-	left: '200px'
-}
+	left: '200px',
+};

@@ -47,7 +47,8 @@ const executeStyle = {
     overflowY: 'scroll',
     height: '80vh',
     padding: 0,
-    margin: 0
+    margin: 0,
+    background: 'white'
 };
 
 const studyStyle = {
