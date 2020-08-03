@@ -27,7 +27,7 @@ export class PuzzleInterpreter extends NodeVisitor {
 		this.parser = parser;
 		this.environment = {}; // declare an environment, in case we are addig global variables in the future
 		this.player = new Player();
-		this.graphic = new p5WrapperPuzzle(htmlElement, this.player, 3);
+		this.graphic = new p5WrapperPuzzle(htmlElement, this.player, 1);
 	}
 
 	async visitStart(node) {
