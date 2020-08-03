@@ -9,6 +9,7 @@ import {Draw} from './draw/draw';
 import {Learn} from './learn/learn';
 import {Puzzle} from './puzzle/puzzle';
 import { LearnSection } from './learn/learnSection';
+import { PuzzleSection } from './puzzle/puzzleSection';
 
 export class App extends React.Component {
 	constructor(props) {
@@ -34,7 +35,7 @@ export class App extends React.Component {
 								<LearnSection />
 							</Route>
 							<Route path='/puzzle'>
-								<Puzzle />
+								<PuzzleSection />
 							</Route>
 							<Route path='/'>
 								<Menu/>

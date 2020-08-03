@@ -80,7 +80,7 @@ export class Draw extends React.Component {
 				data: this.state.photoData,
 			})
 			.then((response) => {
-				console.log(response);
+				console.log('response called', response.data);
 				setTimeout(() => {
 					this.setState({
 						tokens: square,

@@ -1,42 +1,42 @@
 import React from 'react';
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
+import { Icon } from 'semantic-ui-react';
 
-import { PuzzleCanvas, states } from './puzzleCanvas';
+import { Canvas, states } from './puzzleCanvas';
 import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
+import { CodeDisplay } from '../codeDisplay';
 
+import { Loader } from 'semantic-ui-react';
 // Get the sample tokens
-const {puzzleSolution1} = require('../../../interpreter/sample');
+const { puzzleSolution3 } = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
 export class Puzzle extends React.Component {
 	constructor(props) {
 		super(props);
+		this.level = props.level;
 		this.state = {
 			photo: false,
 			play: false,
 			photoData: null,
 			canvasState: states.INACTIVE,
 			inputState: inputStates.INPUT,
+			activeLine: 0,
+			tokens: null,
+			level: props.level | 1
 		};
 	}
 
 	handleTakePhotos(dataUri) {
 		console.log('photo captured');
-		// window.location = dataUri;
-		this.setState(
-			{
-				photo: true,
-				photoData: dataUri,
-				inputState: inputStates.LOADING,
-				// canvasState: states.READY,
-			},
-			(state) => {
-				this.getTokens();
-			}
-		);
+		this.setState({
+			photo: true,
+			photoData: dataUri,
+			inputState: inputStates.IMAGE,
+		});
 	}
 
 	handleImageUpload(event, file, value) {
@@ -47,16 +47,11 @@ export class Puzzle extends React.Component {
 			'load',
 			() => {
 				// convert image file to base64 string
-				this.setState(
-					{
-						photoData: reader.result,
-						photo: true,
-						inputState: inputStates.LOADING,
-					},
-					(state) => {
-						this.getTokens();
-					}
-				);
+				this.setState({
+					photoData: reader.result,
+					photo: true,
+					inputState: inputStates.IMAGE,
+				});
 			},
 			false
 		);
@@ -66,43 +61,64 @@ export class Puzzle extends React.Component {
 		}
 	}
 
-
 	getTokens() {
+		// axios.get()
+		let tokens;
+		switch (this.props.level) {
+			// case 1:
+			// 	tokens = puzzleSolution3;
+			// 	break;
+			// case 2:
+			// 	tokens = learnSolution2;
+			// 	break;
+			case 3:
+				tokens = puzzleSolution3;
+				break;
+			// case 4:
+			// 	tokens = learnSolution4;
+			// 	break;
+			default:
+				tokens = puzzleSolution3;
+				break;
+		}
+		this.setState({
+			inputState: inputStates.LOADING,
+		});
 		axios
 			.post('/api/lexer/', {
 				data: this.state.photoData,
 			})
 			.then((response) => {
 				console.log(response);
-				this.setState({
-					tokens: puzzleSolution1,
-					canvasState: states.READY,
-					inputState: inputStates.READY
-				})
+				setTimeout(() => {
+					this.setState({
+						tokens: tokens,
+						canvasState: states.READY,
+						inputState: inputStates.READY,
+					});
+				}, 3000);
 			})
 			.catch((error) => {
-				// console.error(error);
-				// this.reset();
 				this.setState({
-					tokens: puzzleSolution1, 
+					tokens: tokens,
 					canvasState: states.READY,
-					inputState: inputStates.READY
-				})
+					inputState: inputStates.READY,
+				});
 			});
 	}
 
 	stop() {
 		this.setState({
-			canvasState: states.RESET
+			canvasState: states.RESET,
+			activeLine: 0,
 		});
 	}
 
 	start() {
 		this.setState({
-			canvasState: states.PLAY
+			canvasState: states.PLAY,
 		});
 	}
-
 
 	reset() {
 		this.setState({
@@ -111,16 +127,99 @@ export class Puzzle extends React.Component {
 			photoData: null,
 			canvasState: states.RESET,
 			inputState: inputStates.INPUT,
+			activeLine: 0,
 		});
 	}
 
+	updateActiveLine(activeLine) {
+		this.setState({
+			activeLine,
+		});
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.level != this.props.level) {
+			console.log('Changed the level');
+			if (prevProps.level) this.reset();
+			else {
+				this.setState({
+					canvasState: states.INACTIVE, // set as inactive
+					inputState: inputStates.INPUT, // set as input
+					photo: false,
+					play: false,
+					photoData: null,
+					activeLine: 0,
+				});
+			}
+		}
+	}
 	render() {
+		let component;
+		if (this.state.inputState == inputStates.LOADING) {
+			component = (
+				<div style={loaderStyle}>
+					<div className='ui active inline loader'></div>
+					<div>Compiling ...</div>
+				</div>
+			);
+		} else if (this.state.inputState == inputStates.IMAGE) {
+			component = (
+				<div style={imageStyle}>
+					<img className='imageStyle' src={this.state.photoData} />
+					<Icon
+						style={compileStyle}
+						link
+						size='huge'
+						name='cogs'
+						onClick={this.getTokens.bind(this)}
+					/>
+				</div>
+			);
+		} else if (
+			this.state.canvasState == states.READY ||
+			this.state.canvasState == states.PLAY ||
+			this.state.canvasState == states.RESET
+		) {
+			component = (
+				<CodeDisplay
+					state={this.state.canvasState}
+					tokens={this.state.tokens}
+					activeLine={this.state.activeLine}
+				/>
+			);
+		} else if (this.state.canvasState == states.INACTIVE) {
+			component = (
+				<div className='cameraStyle'>
+					<Camera
+						isImageMirror={false}
+						idealResolution={{ width: 640, height: 480 }}
+						onTakePhoto={(dataUri) => {
+							this.handleTakePhotos(dataUri);
+						}}
+					/>
+					<UploadImage handleImageUpload={this.handleImageUpload.bind(this)} />
+				</div>
+			);
+		}
+
 		return (
-			<div className='drawContentStyle'>
-				{this.state.photoData ? (	
-					<ExecutionWindow start={this.start.bind(this)} stop={this.stop.bind(this)} reset={this.reset.bind(this)} photoData={this.state.photoData}/>
+			<div className='puzzleContentStyle'>
+				{this.state.photoData ? (
+					<ExecutionWindow
+						start={this.start.bind(this)}
+						stop={this.stop.bind(this)}
+						reset={this.reset.bind(this)}
+						photoData={this.state.photoData}
+						ready={
+							this.state.inputState == inputStates.LOADING ||
+							this.state.inputState == inputStates.IMAGE
+						}
+					>
+						{' '}
+						{component}{' '}
+					</ExecutionWindow>
 				) : (
-					<div className='cameraStyle'>
+					<div className='puzzleCameraStyle'>
 						<Camera
 							isImageMirror={false}
 							idealResolution={{ width: 640, height: 480 }}
@@ -133,7 +232,12 @@ export class Puzzle extends React.Component {
 						/>
 					</div>
 				)}
-				<PuzzleCanvas state={this.state.canvasState} tokens={puzzleSolution1} />
+				<Canvas
+					state={this.state.canvasState}
+					tokens={this.state.tokens}
+					level={this.props.level}
+					updateActiveLine={this.updateActiveLine.bind(this)}
+				/>
 			</div>
 		);
 	}
@@ -143,4 +247,29 @@ const inputStates = {
 	INPUT: 'input',
 	LOADING: 'loading',
 	READY: 'ready',
+	IMAGE: 'image',
+};
+
+const loaderStyle = {
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	justifyContent: 'center',
+	width: '400px',
+	height: '400px',
+	background: 'white',
+	border: '2px solid grey',
+};
+
+const imageStyle = {
+	position: 'relative',
+	height: '400px',
+	width: '400px',
+	background: 'white',
+};
+
+const compileStyle = {
+	position: 'absolute',
+	top: '200px',
+	left: '200px',
 };

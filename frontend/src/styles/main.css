@@ -132,3 +132,32 @@ h1 span {
 	height: 400px;
 	margin: 200px;
 }
+
+.puzzleContentStyle {
+	height: 80vh;
+	display: flex;
+	justify-content: space-around;
+	align-items: start;
+	width: 55vw;
+	min-width: 350px;
+	flex-wrap: wrap;
+	background: 'white';
+}
+
+.puzzleCanvasStyle {
+	margin: 0;
+	padding: 0;
+}
+
+.puzzleCameraStyle {
+	position: relative;
+	height: 400px;
+	width: 400px;
+}
+
+.puzzleCameraStyle video {
+	position: relative;
+	background-color: black;
+	height: 400px;
+	width: 400px;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 const { PuzzleInterpreter } = require('../../../interpreter/puzzleInterpreter');
 const { Parser } = require('../../../interpreter/parser');
 
-export class PuzzleCanvas extends React.Component {
+export class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
 		this.tokens = props.tokens;
@@ -17,17 +17,24 @@ export class PuzzleCanvas extends React.Component {
 	}
 
 	setupInterpreter() {
-		this.parser = new Parser(this.tokens);
-		this.interpreter = new PuzzleInterpreter(this.parser, this.myRef.current);
+		this.interpreter = new PuzzleInterpreter(this.myRef.current, this.props.level);
 	}
+
 	componentDidUpdate(prevProps, prevState) {
-		console.log('canvas state updated', this.props.state);
-		if (prevProps.state != this.props.state) {
+		console.log('canvas state updated', this.props.state, this.props.level);
+		if (prevProps.state != this.props.state || prevProps.level != this.props.level) {
+			console.log(prevProps.level, this.props.level);
 			this.setState({ state: this.props.state }, (state) => {
 				if (this.state.state == states.PLAY) {
-					this.interpreter.analyse();
+					this.parser = new Parser(this.props.tokens);
+					this.interpreter.attachParser(this.parser);
+					this.interpreter.analyse(this.props.updateActiveLine);
+
 				} else if (this.state.state == states.RESET) {
 					this.interpreter.deleteSketch();
+					this.setupInterpreter();
+				} else if (this.state.state == states.INACTIVE) {
+					if(this.interpreter) this.interpreter.deleteSketch();
 					this.setupInterpreter();
 				}
 			});
@@ -36,7 +43,7 @@ export class PuzzleCanvas extends React.Component {
 	}
 
 	render() {
-		return <div className='canvasStyle' ref={this.myRef} />;
+		return <div className='puzzleCanvasStyle' ref={this.myRef} />;
 	}
 }
 
