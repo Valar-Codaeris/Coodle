@@ -11,7 +11,7 @@ import { CodeDisplay } from '../codeDisplay';
 
 import { Loader } from 'semantic-ui-react';
 // Get the sample tokens
-const { puzzleSolution3 } = require('../../../interpreter/sample');
+const { puzzleSolution1, puzzleSolution2, puzzleSolution3 } = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
 export class Puzzle extends React.Component {
@@ -65,12 +65,12 @@ export class Puzzle extends React.Component {
 		// axios.get()
 		let tokens;
 		switch (this.props.level) {
-			// case 1:
-			// 	tokens = puzzleSolution3;
-			// 	break;
-			// case 2:
-			// 	tokens = learnSolution2;
-			// 	break;
+			case 1:
+				tokens = puzzleSolution1;
+				break;
+			case 2:
+				tokens = puzzleSolution2;
+				break;
 			case 3:
 				tokens = puzzleSolution3;
 				break;

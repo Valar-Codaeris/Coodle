@@ -173,6 +173,146 @@ export const learnSolution4 = [
 	],
 ];
 
+export const puzzleSolution1 = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_ANTICLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 250,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 300,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_CLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 250,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
+
+export const puzzleSolution2 = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 200,
+		}
+	],
+	[
+		{
+			type: 'ROTATE_ANTICLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		}
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 250,
+		},
+	],
+	[
+		{
+			type: 'ROTATE_ANTICLOCKWISE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 200,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		}
+	],
+];
+
 export const puzzleSolution3 = [
 	[
 		{
