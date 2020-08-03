@@ -1,16 +1,17 @@
 import p5 from 'p5';
-import { Wall } from './wall';
+import { Puzzle } from './puzzle';
 
 export class p5WrapperPuzzle {
-  constructor(htmlElement, player) {
+  constructor(htmlElement, player, level) {
     this.dimension = {
 			width: 400,
 			height: 400,
     };
+    this.level = level;
     this.walls = [];
     this.player = player;
+    this.puzzle = new Puzzle(this.dimension);
     this.sketch = new p5(this.p5instance.bind(this), htmlElement);
-
   }
 
   p5instance(sketch) {
@@ -25,7 +26,17 @@ export class p5WrapperPuzzle {
       sketch.background('#E71E5C');
       
       this.player.createPathGraphic(sketch);
-      this.createWalls();
+      switch(this.level) {
+        case 1:
+          this. walls = this.puzzle.configureLevel1(this.walls);
+          break;
+        case 2:
+          this.walls = this.puzzle.configureLevel2(this.walls);
+          break;
+        case 3:
+          this.walls = this.puzzle.configureLevel3(this.walls);
+          break;
+      }
     }
 
     sketch.draw = () => {
@@ -38,16 +49,21 @@ export class p5WrapperPuzzle {
         wall.detectCollision(this.player);
       }
 
+      //Display Destination
+      switch(this.level) {
+        case 1:
+          sketch.circle(7*this.dimension.width/8, 3*this.dimension.height/4, 20);
+          break;
+        case 2:
+          sketch.circle(this.dimension.width/8, this.dimension.height/8, 20);
+          break;
+        case 3:
+          sketch.circle(7*this.dimension.width/8, 3*this.dimension.height/4, 20);
+          break;
+        }
+            
       //Display the player
       this.player.display(sketch);
-    }
-
-    //Generates a zig-zag pattern of walls
-    this.createWalls = () => {
-      const obstacles = 4;
-      for(let i = 1; i < obstacles; i++) {
-        this.walls.push(new Wall(i*this.dimension.width/obstacles, this.dimension.height/2, Math.pow(-1,i)*this.dimension.height/2, 'y'))
-      }
     }
   }
 }

@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 
 // Get the sample tokens
-const {learnSolution} = require('../../../interpreter/sample');
+const {learnSolution1} = require('../../../interpreter/sample');
 
 console.log(FACING_MODES);
 export class Learn extends React.Component {
@@ -75,7 +75,7 @@ export class Learn extends React.Component {
 			.then((response) => {
 				console.log(response);
 				this.setState({
-					tokens: learnSolution, 
+					tokens: learnSolution1, 
 					canvasState: states.READY,
 					inputState: inputStates.READY
 				})
@@ -84,7 +84,7 @@ export class Learn extends React.Component {
 				// console.error(error);
 				// this.reset();
 				this.setState({
-					tokens: learnSolution, 
+					tokens: learnSolution1, 
 					canvasState: states.READY,
 					inputState: inputStates.READY
 				})
@@ -133,7 +133,7 @@ export class Learn extends React.Component {
 						/>
 					</div>
 				)}
-				<LearnCanvas state={this.state.canvasState} tokens={learnSolution} />
+				<LearnCanvas state={this.state.canvasState} tokens={learnSolution1} />
 			</div>
 		);
 	}

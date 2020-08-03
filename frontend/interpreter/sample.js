@@ -5,7 +5,124 @@
 	}
 );
 
-const learnSolution = [
+export const learnSolution1 = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		}
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		}
+	]
+];
+
+export const learnSolution2 = [
+	[
+		{
+			type: 'START',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'ROTATE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 90,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
+
+export const learnSolution3 = [
+	[
+		{
+			type: 'START',
+			value: null
+		},
+	],
+	[
+		{
+			type: 'REPEAT',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'ROTATE',
+			value: null,
+		},
+		{
+			type: 'ANGLE',
+			value: 60,
+		},
+	],
+	[
+		{
+			type: 'FRONT',
+			value: null,
+		},
+		{
+			type: 'NUMBER',
+			value: 100,
+		},
+	],
+	[
+		{
+			type: 'END_REPEAT',
+			value: null,
+		},
+	],
+	[
+		{
+			type: 'STOP',
+			value: null,
+		},
+	],
+];
+
+export const learnSolution4 = [
 	[
 		{
 			type: 'START',
@@ -56,7 +173,7 @@ const learnSolution = [
 	],
 ];
 
-const puzzleSolution = [
+export const puzzleSolution1 = [
 	[
 		{
 			type: 'START',
@@ -160,7 +277,8 @@ const puzzleSolution = [
 		},
 	],
 ];
-const square = [
+
+export const square = [
 	[
 		{
 			type: 'START',
@@ -210,7 +328,8 @@ const square = [
 		},
 	],
 ];
-const star = [
+
+export const star = [
 	[
 		{
 			type: 'START',
@@ -267,7 +386,7 @@ const star = [
 	],
 ];
 
-const nestedLoop = [
+export const nestedLoop = [
 	[
 		{
 			type: 'START',
@@ -405,5 +524,3 @@ const infiniteLoop = [
 		},
 	],
 ];
-
-module.exports = {learnSolution, nestedLoop, square, puzzleSolution};
