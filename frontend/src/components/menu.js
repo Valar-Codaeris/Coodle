@@ -7,7 +7,7 @@ export const Menu = () => {
 		<Card style={cardStyle}>
 			<Card.Content>
 				<Card.Description style={headingStyle}>
-					<h1>COODLE</h1>
+					<h1><span style={spanStyle}>C</span>OODLE</h1>
 				</Card.Description>
 				<Card.Meta>
 					<div style={metaStyle}>
@@ -18,19 +18,19 @@ export const Menu = () => {
 				<Card.Description>
 					<div style={buttonListStyle}>
 						<Link to='/learn'>
-							<Button style={buttonStyle} inverted color='red' lin>
+							<Button style={buttonStyle} color='yellow'>
 								Learn
 							</Button>
 						</Link>
 
 						<Link to='/draw'>
-							<Button style={buttonStyle} inverted color='blue'>
+							<Button style={buttonStyle} color='green'>
 								Draw
 							</Button>
 						</Link>
 
 						<Link to='/puzzle'>
-							<Button style={buttonStyle} inverted color='green'>
+							<Button style={buttonStyle} color='blue'>
 								Puzzles
 							</Button>
 						</Link>
@@ -45,30 +45,46 @@ const headingStyle = {
 	textAlign: 'center',
 	color: 'rgb(102, 145, 255)',
 	padding: '3px',
+	fontFamily: 'Raleway',
 };
 
 const metaStyle = {
 	textAlign: 'center',
 	fontSize: '1em',
+	fontFamily: 'Nunito',
+	color: '#979797',
 };
 
 const buttonListStyle = {
+	marginTop: '30px',
 	display: 'flex',
 	justifyContent: 'space-around',
 	alignItems: 'center',
 	flexDirection: 'column',
-	height: '25vh',
+	height: '23vh',
 	width: '100%',
-	padding: 10,
 };
 
 const cardStyle = {
 	padding: 20,
-	height: '50vh',
-    width: '30vw',
-    minWidth: '350px'
+	height: '55vh',
+	width: '40vw',
+	minWidth: '350px',
+	boxShadow: '2px 2px 45px 9px rgba(0, 0, 0, 0.05)',
+	borderRadius: '5px',
 };
 
 const buttonStyle = {
 	width: '150px',
+	boxShadow: '1px 2px 9px rgba(0, 0, 0, 0.12)',
+	borderRadius: '4px',
+	fontFamily: 'Nunito',
+	fontWeight: '800',
+	textTransform: 'uppercase',
+	fontSize: '14px',
+	height: '115%',
+};
+
+const spanStyle ={
+	fontSize: '72px',
 };

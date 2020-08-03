@@ -6,15 +6,15 @@ export const Header = () => {
 		<Segment attached style={boxStyle}>
 			<div style={brandStyle}>
 				<img src='/assets/monkey.png' style={imageStyle}></img>
-				<h2 style={headingStyle}>COODLE</h2>
+				<h2 style={headingStyle}><span style={spanStyle}>C</span>OODLE</h2>
 			</div>
-			<Icon name='setting' size='large' inverted />
 		</Segment>
 	);
 };
 
 const boxStyle = {
 	background: 'rgb(102, 145, 255)',
+	boxShadow: '0px 4px 9px 2px rgba(0, 0, 0, 0.09)',
 	display: 'flex',
 	border: 'none',
 	alignItems: 'center',
@@ -24,7 +24,7 @@ const boxStyle = {
 
 const brandStyle = {
 	display: 'flex',
-	justifyContent: 'space-around',
+	justifyContent: 'center',
 	alignItems: 'center',
 	// paddingLeft: 10,
 	color: 'white',
@@ -38,5 +38,10 @@ const imageStyle = {
 
 const headingStyle = {
 	padding: 0,
-	margin: 0,
+	margin: '10px',
+	fontFamily: 'Raleway',
 };
+
+const spanStyle ={
+	fontSize: '36px',
+}

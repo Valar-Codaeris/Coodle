@@ -19,6 +19,16 @@ body {
 	/* overflow-y: hidden; */
 }
 
+h1 {
+	font-size: 56px;
+	color: #6691FF;
+	font-weight: 800;
+}
+
+h1 span {
+	font-size: 72px;
+}
+
 #content {
 	height: 90vh;
 	width: 100vw;
