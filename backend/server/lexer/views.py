@@ -1,6 +1,9 @@
+import cv2
+import base64
+import numpy as np
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-import base64
+from block_sequence_detection.text_detector import TokenGenerator
 
 
 @api_view(['GET', 'POST'])
@@ -8,17 +11,12 @@ def lexer(request):
     """
     Given an image, return the sequence of tokens detected
     """
-    imageString = request.data['data'].split(',')[1] # Get the base 64 data
+    encoded_image = request.data['data'].split(',')[1] # Get the base 64 data
 
-    # Binary image data, to be used in the ML pipeline
-    imageData = base64.b64decode(imageString)
-    # with open('image', 'wb') as f:
-    #     f.write(imageData)
+    # Decode the image
+    nparr = np.frombuffer(base64.b64decode(encoded_image), np.uint8)
+    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    return Response({'tokens': [[{
-        'type': 'START',
-        'line': 0
-    }], [], [{
-        'type': 'STOP',
-        'line': 0
-    }]]})
+    token_sequence = TokenGenerator(image)
+
+    return Response(token_sequence)
