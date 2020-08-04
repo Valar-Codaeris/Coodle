@@ -19,7 +19,7 @@ export const learnSolution1 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 100,
+			value: 200,
 		}
 	],
 	[
@@ -87,15 +87,19 @@ export const learnSolution3 = [
 			type: 'REPEAT',
 			value: null,
 		},
+		{
+			type: 'NUMBER',
+			value: 3
+		}
 	],
 	[
 		{
-			type: 'ROTATE_CLOCWISE',
+			type: 'ROTATE_CLOCKWISE',
 			value: null,
 		},
 		{
 			type: 'ANGLE',
-			value: 60,
+			value: 120,
 		},
 	],
 	[

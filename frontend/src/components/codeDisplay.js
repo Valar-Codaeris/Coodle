@@ -7,7 +7,9 @@ export const CodeDisplay = ({ tokens, activeLine = 0 }) => {
 			const imageSource = `/assets/cards/${token.type}.png`;
 			let component = <img style={tokenStyle} src={imageSource} />;
 			if (token.type == types.NUMBER || token.type == types.ANGLE) {
-				component = <h1 style={numberStyle}>{token.value}</h1>;
+				let value = token.value;
+				if(token.type == types.NUMBER && token.value >= 100) value = Math.ceil(value/100);
+				component = <h1 style={numberStyle}>{value}</h1>;
 			}
 			return component;
 		});

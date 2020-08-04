@@ -74,9 +74,6 @@ export class Puzzle extends React.Component {
 			case 3:
 				tokens = puzzleSolution3;
 				break;
-			// case 4:
-			// 	tokens = learnSolution4;
-			// 	break;
 			default:
 				tokens = puzzleSolution3;
 				break;

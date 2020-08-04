@@ -13,24 +13,26 @@ def TokenGenerator(image):
 	blocks = []
 	lineNo = []
 	tokens = {
-		"START":"START",
-		"END":"ENDREPEAT",
-		"REPEAT":"REPEAT",
-		"LEFT":"LEFT",
-		"RIGHT":"RIGHT",
-		"FORWARD":"FORWARD",
-		"BACKWARD":"BACKWARD",
-		"ROTATE":"ROTATE",
-		"TIMES":"TIMES",
-		"ANTI":"ANTICLOCKWISE",
-		"CLOCKWISE":"CLOCKWISE",
-		"d01S":"STOP",
-		"dOLS":"STOP",
-		"d0LS":"STOP",
-		"STOP":"STOP",
-		"IF":"IF",
-		"ELSE":"ELSE"
-	}
+        "START":"START",
+        "END":"END_REPEAT",
+        "REPEAT":"REPEAT",
+        "LEFT":"LEFT",
+        "RIGHT":"RIGHT",
+        "FORWARD":"FRONT",
+        "BACKWARD":"BACK",
+        "ROTATE":"ROTATE",
+        "TIMES":"TIMES",
+        "ANTI":"ROTATE_ANTICLOCKWISE",
+        "CLOCKWISE":"ROTATE_CLOCKWISE",
+        "d01S":"STOP",
+        "dOLS":"STOP",
+        "d0LS":"STOP",
+        "STOP":"STOP",
+        "IF":"IF",
+        "ELSE":"ELSE",
+        "002":"TIMES|002",
+        "zoo":"TIMES|002"
+    }
 	sequence = {}
 	
 	blocks,lines = detect_tokens(image)

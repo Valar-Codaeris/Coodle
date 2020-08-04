@@ -80,23 +80,78 @@ export class Draw extends React.Component {
 				data: this.state.photoData,
 			})
 			.then((response) => {
-				console.log('response called', response.data);
+				// console.log('response called', response.data);
+				const tokens = response.data;
+				let tokenArray = [];
+				for(let key in Object.keys(tokens)) {
+					tokenArray[Number(key)] = tokens[key];
+				}
+				console.log(tokenArray);
+				const tokenList = tokenArray.map((tokenList, index) => {
+					console.log(tokenList);
+					const command = tokenList.map(token => {
+						console.log(token);
+						
+						if(token.indexOf('|') != -1) { // It is an angle or number
+							const number = token.split('|');
+							if(number.length == 2) {
+								if(number[0] == 'TIMES') {
+									return {
+										type: 'NUMBER',
+										value: Number(number[1]),
+									}
+								}
+								else if(number[0] == 'ROTATE') {
+									if(number[1] > 360 ) {
+										number[1] = number[1]/10
+									}
+									return {
+										type: 'ANGLE',
+										value: Number(number[1])
+									}
+								}
+							}
+							else {
+								if(number[0] == 'TIMES') {
+									return {
+										type: 'NUMBER',
+										value: 0,
+									}
+								}
+								else if(number[0] == 'ROTATE') {
+									return {
+										type: 'ANGLE',
+										value: 0
+									}
+								}
+							}
+						}
+						else {
+							return  {
+								type: token,
+								value: null
+							}
+						}
+					});
+					return command;
+				});
+				console.log(tokenList);
 				setTimeout(() => {
 					this.setState({
-						tokens: square,
+						tokens: tokenList,
 						canvasState: states.READY,
 						inputState: inputStates.READY,
 					});
 				}, 3000);
 			})
 			.catch((error) => {
-				// console.error(error);
+				console.error(error);
 				// this.reset();
-				this.setState({
-					tokens: square,
-					canvasState: states.READY,
-					inputState: inputStates.READY,
-				});
+				// this.setState({
+				// 	tokens: square,
+				// 	canvasState: states.READY,
+				// 	inputState: inputStates.READY,
+				// });
 			});
 	}
 
@@ -158,7 +213,7 @@ export class Draw extends React.Component {
 			component = (
 				<CodeDisplay
 					state={this.state.canvasState}
-					tokens={square}
+					tokens={this.state.tokens}
 					activeLine={this.state.activeLine}
 				/>
 			);

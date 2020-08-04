@@ -58,12 +58,12 @@ export class Interpreter extends NodeVisitor {
 		this.updateActiveLine(node.token.line);
 		switch (node.type) {
 			case types.FRONT: {
-				if(node.value < 100) node.value = node.value * 100;
+				if(node.value < 100) node.value = node.value * 20;
 				await this.graphic.move(node.value);
 				break;
 			}
 			case types.BACK: {
-				if(node.value < 100) node.value = node.value * 100;
+				if(node.value < 100) node.value = node.value * 20;
 				await this.graphic.move(-node.value);
 				break;
 			}
