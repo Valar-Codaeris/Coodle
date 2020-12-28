@@ -5,10 +5,10 @@ import { Segment, Icon } from 'semantic-ui-react';
 export const Header = () => {
 	return (
 		<Segment attached style={boxStyle}>
-			<div style={brandStyle}>
+			<Link to="/" style={brandStyle}>
 				<img src='/assets/monkey.png' style={imageStyle}></img>
 				<h2 style={headingStyle}><span style={spanStyle}>C</span>OODLE</h2>
-			</div>
+			</Link>
 		</Segment>
 	);
 };
@@ -20,7 +20,7 @@ const boxStyle = {
 	border: 'none',
 	alignItems: 'center',
 	justifyContent: 'space-between',
-	height: '7vh',
+	height: '10vh',
 };
 
 const brandStyle = {
@@ -34,6 +34,7 @@ const brandStyle = {
 
 const imageStyle = {
 	height: '3.5vh',
+	marginTop: 0,
 };
 
 const headingStyle = {

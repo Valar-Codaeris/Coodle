@@ -3,20 +3,14 @@
 	padding: 0;
 }
 
-main {
-	height: 100%;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
 body {
 	height: 100vh;
 	width: 100vw;
 	margin: 0;
 	padding: 0;
-	/* overflow-y: hidden; */
+	font-family: 'Nunito';
+	font-size: '1em';
+	color: '#979797';
 }
 
 h1 {
@@ -25,12 +19,12 @@ h1 {
 	font-weight: 800;
 }
 
-h1 span {
-	font-size: 72px;
+img {
+	margin-top: 20px;
 }
 
 #content {
-	height: 90vh;
+	height: 80vh;
 	width: 100vw;
 	display: flex;
 	justify-content: center;
@@ -94,10 +88,8 @@ h1 span {
 .learnContentStyle {
 	height: 60vh;
 	display: flex;
-	/* flex-direction: column; */
 	justify-content: space-around;
 	align-items: center;
-	/* width: 55vw; */
 	min-width: 350px;
 	flex-wrap: wrap;
 	background: 'white';
@@ -105,9 +97,6 @@ h1 span {
 
 .descriptionStyle {
 	margin: '20px';
-	/* display: 'flex';
-	justify-content: center;
-	align-items: space-around; */
 }
 
 .dropdownStyle {

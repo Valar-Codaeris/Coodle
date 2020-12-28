@@ -7,6 +7,7 @@ import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
+import { InfoPanel } from './infoPanel';
 const { star, square } = require('../../../interpreter/sample');
 
 export class Draw extends React.Component {
@@ -119,7 +120,7 @@ export class Draw extends React.Component {
 			.catch((error) => {
 				console.error(error);
 				this.setState({
-					tokens: star,
+					tokens: square,
 					canvasState: states.READY,
 					inputState: inputStates.READY,
 				});
@@ -197,6 +198,9 @@ export class Draw extends React.Component {
 
 		return (
 			<div className='drawContentStyle'>
+				{/* Information panel for the given mode */}
+				<InfoPanel/>
+
 				{/* If image has been taken, then show program controls once the image has been compiled */}
 				{this.state.photoData ? (
 					<ExecutionWindow

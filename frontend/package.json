@@ -19,6 +19,7 @@
 		"react-dom": "^16.13.1",
 		"react-html5-camera-photo": "^1.5.4",
 		"react-router-dom": "^5.2.0",
+		"react-socks": "^2.1.0",
 		"semantic-ui-css": "^2.4.1",
 		"semantic-ui-react": "^1.1.0"
 	},
