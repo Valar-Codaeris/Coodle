@@ -1,19 +1,18 @@
 import React from 'react';
-import Camera, { FACING_MODES } from 'react-html5-camera-photo';
+import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import { Icon } from 'semantic-ui-react';
-
 import { Canvas, states } from './puzzleCanvas';
 import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
+const {
+	puzzleSolution1,
+	puzzleSolution2,
+	puzzleSolution3,
+} = require('../../../interpreter/sample');
 
-import { Loader } from 'semantic-ui-react';
-// Get the sample tokens
-const { puzzleSolution1, puzzleSolution2, puzzleSolution3 } = require('../../../interpreter/sample');
-
-console.log(FACING_MODES);
 export class Puzzle extends React.Component {
 	constructor(props) {
 		super(props);
@@ -26,10 +25,11 @@ export class Puzzle extends React.Component {
 			inputState: inputStates.INPUT,
 			activeLine: 0,
 			tokens: null,
-			level: props.level | 1
+			level: props.level | 1,
 		};
 	}
 
+	//Handler function to handle the component's state once the photo has been taken
 	handleTakePhotos(dataUri) {
 		console.log('photo captured');
 		this.setState({
@@ -39,10 +39,10 @@ export class Puzzle extends React.Component {
 		});
 	}
 
+	//Handler function to handle the component's state once the image is uploaded
 	handleImageUpload(event, file, value) {
 		console.log(file);
 		const reader = new FileReader();
-
 		reader.addEventListener(
 			'load',
 			() => {
@@ -55,14 +55,12 @@ export class Puzzle extends React.Component {
 			},
 			false
 		);
-
 		if (file) {
 			reader.readAsDataURL(file);
 		}
 	}
 
 	getTokens() {
-		// axios.get()
 		let tokens;
 		switch (this.props.level) {
 			case 1:
@@ -134,6 +132,7 @@ export class Puzzle extends React.Component {
 		});
 	}
 
+	//If new puzzle is loaded
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps.level != this.props.level) {
 			console.log('Changed the level');
@@ -152,6 +151,7 @@ export class Puzzle extends React.Component {
 	}
 	render() {
 		let component;
+		//Show this when the image is being compiled
 		if (this.state.inputState == inputStates.LOADING) {
 			component = (
 				<div style={loaderStyle}>
@@ -159,7 +159,9 @@ export class Puzzle extends React.Component {
 					<div>Compiling ...</div>
 				</div>
 			);
-		} else if (this.state.inputState == inputStates.IMAGE) {
+		}
+		//If the image has been taken, user may choose to compile
+		else if (this.state.inputState == inputStates.IMAGE) {
 			component = (
 				<div style={imageStyle}>
 					<img className='imageStyle' src={this.state.photoData} />
@@ -172,7 +174,9 @@ export class Puzzle extends React.Component {
 					/>
 				</div>
 			);
-		} else if (
+		}
+		//If the image has been taken and compiled
+		else if (
 			this.state.canvasState == states.READY ||
 			this.state.canvasState == states.PLAY ||
 			this.state.canvasState == states.RESET
@@ -201,6 +205,7 @@ export class Puzzle extends React.Component {
 
 		return (
 			<div className='puzzleContentStyle'>
+				{/* If image has been taken, then show program controls once the image has been compiled */}
 				{this.state.photoData ? (
 					<ExecutionWindow
 						start={this.start.bind(this)}
@@ -216,6 +221,7 @@ export class Puzzle extends React.Component {
 						{component}{' '}
 					</ExecutionWindow>
 				) : (
+					// If you haven't taken the image yet, then either click a picture or, upload an image
 					<div className='puzzleCameraStyle'>
 						<Camera
 							isImageMirror={false}
@@ -229,6 +235,7 @@ export class Puzzle extends React.Component {
 						/>
 					</div>
 				)}
+				{/* p5.js Canvas is displayed here */}
 				<Canvas
 					state={this.state.canvasState}
 					tokens={this.state.tokens}

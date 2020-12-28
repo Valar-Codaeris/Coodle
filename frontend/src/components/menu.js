@@ -9,12 +9,14 @@ export const Menu = () => {
 				<Card.Description style={headingStyle}>
 					<h1><span style={spanStyle}>C</span>OODLE</h1>
 				</Card.Description>
+
 				<Card.Meta>
 					<div style={metaStyle}>
 						Coodle is digital workspace for your kids to learn, doodle and play
-						with code
+						with code. You can select any one of the modes below to get started.
 					</div>
 				</Card.Meta>
+
 				<Card.Description>
 					<div style={buttonListStyle}>
 						<Link to='/learn'>
@@ -22,13 +24,11 @@ export const Menu = () => {
 								Learn
 							</Button>
 						</Link>
-
 						<Link to='/draw'>
 							<Button style={buttonStyle} color='green'>
 								Draw
 							</Button>
 						</Link>
-
 						<Link to='/puzzle'>
 							<Button style={buttonStyle} color='blue'>
 								Puzzles
@@ -67,7 +67,7 @@ const buttonListStyle = {
 
 const cardStyle = {
 	padding: 20,
-	height: '55vh',
+	height: 'auto',
 	width: '40vw',
 	minWidth: '350px',
 	boxShadow: '2px 2px 45px 9px rgba(0, 0, 0, 0.05)',

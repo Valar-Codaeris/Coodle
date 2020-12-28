@@ -1,69 +1,64 @@
 import React from 'react';
-import Camera, { FACING_MODES } from 'react-html5-camera-photo';
+import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import { Icon } from 'semantic-ui-react';
-
 import { Canvas, states } from './learnCanvas';
 import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
+const {
+	learnSolution1,
+	learnSolution2,
+	learnSolution3,
+	learnSolution4,
+} = require('../../../interpreter/sample');
 
-import { Loader } from 'semantic-ui-react';
-// Get the sample tokens
-const {learnSolution1, learnSolution2, learnSolution3, learnSolution4 } = require('../../../interpreter/sample');
-
-console.log(FACING_MODES);
 export class Learn extends React.Component {
 	constructor(props) {
 		super(props);
 		this.level = props.level;
 		this.state = {
-			photo: false,
-			play: false,
 			photoData: null,
 			canvasState: states.INACTIVE,
 			inputState: inputStates.INPUT,
 			activeLine: 0,
-			tokens: null
+			tokens: null,
 		};
 	}
 
+	//Handler function to handle the component's state once the photo has been taken
 	handleTakePhotos(dataUri) {
 		console.log('photo captured');
 		this.setState({
-			photo: true,
 			photoData: dataUri,
 			inputState: inputStates.IMAGE,
 		});
 	}
 
+	//Handler function to handle the component's state once the image is uploaded
 	handleImageUpload(event, file, value) {
 		console.log(file);
 		const reader = new FileReader();
-
 		reader.addEventListener(
 			'load',
 			() => {
 				// convert image file to base64 string
 				this.setState({
 					photoData: reader.result,
-					photo: true,
 					inputState: inputStates.IMAGE,
 				});
 			},
 			false
 		);
-
 		if (file) {
 			reader.readAsDataURL(file);
 		}
 	}
 
 	getTokens() {
-		// axios.get()
 		let tokens;
-		switch(this.props.level) {
+		switch (this.props.level) {
 			case 1:
 				tokens = learnSolution1;
 				break;
@@ -90,7 +85,6 @@ export class Learn extends React.Component {
 			.then((response) => {
 				console.log(response);
 				setTimeout(() => {
-					
 					this.setState({
 						tokens: tokens,
 						canvasState: states.READY,
@@ -122,8 +116,6 @@ export class Learn extends React.Component {
 
 	reset() {
 		this.setState({
-			photo: false,
-			play: false,
 			photoData: null,
 			canvasState: states.RESET,
 			inputState: inputStates.INPUT,
@@ -137,6 +129,7 @@ export class Learn extends React.Component {
 		});
 	}
 
+	//If new level is loaded
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps.level != this.props.level) {
 			console.log('Changed the level');
@@ -145,16 +138,16 @@ export class Learn extends React.Component {
 				this.setState({
 					canvasState: states.INACTIVE, // set as inactive
 					inputState: inputStates.INPUT, // set as input
-					photo: false,
-					play: false,
 					photoData: null,
 					activeLine: 0,
 				});
 			}
 		}
 	}
+
 	render() {
 		let component;
+		//Show this when the image is being compiled
 		if (this.state.inputState == inputStates.LOADING) {
 			component = (
 				<div style={loaderStyle}>
@@ -162,7 +155,9 @@ export class Learn extends React.Component {
 					<div>Compiling ...</div>
 				</div>
 			);
-		} else if (this.state.inputState == inputStates.IMAGE) {
+		}
+		//If the image has been taken, user may choose to compile
+		else if (this.state.inputState == inputStates.IMAGE) {
 			component = (
 				<div style={imageStyle}>
 					<img className='imageStyle' src={this.state.photoData} />
@@ -175,7 +170,9 @@ export class Learn extends React.Component {
 					/>
 				</div>
 			);
-		} else if (
+		}
+		//If the image has been taken and compiled
+		else if (
 			this.state.canvasState == states.READY ||
 			this.state.canvasState == states.PLAY ||
 			this.state.canvasState == states.RESET
@@ -187,29 +184,18 @@ export class Learn extends React.Component {
 					activeLine={this.state.activeLine}
 				/>
 			);
-		} else if (this.state.canvasState == states.INACTIVE) {
-			component = (
-				<div className='cameraStyle'>
-					<Camera
-						isImageMirror={false}
-						idealResolution={{ width: 640, height: 480 }}
-						onTakePhoto={(dataUri) => {
-							this.handleTakePhotos(dataUri);
-						}}
-					/>
-					<UploadImage handleImageUpload={this.handleImageUpload.bind(this)} />
-				</div>
-			);
 		}
 
 		return (
 			<div className='learnContentStyle'>
+				{/* p5.js Canvas is displayed here */}
 				<Canvas
 					state={this.state.canvasState}
 					tokens={this.state.tokens}
 					level={this.props.level}
 					updateActiveLine={this.updateActiveLine.bind(this)}
 				/>
+				{/* If image has been taken, then show program controls once the image has been compiled */}
 				{this.state.photoData ? (
 					<ExecutionWindow
 						start={this.start.bind(this)}
@@ -221,10 +207,10 @@ export class Learn extends React.Component {
 							this.state.inputState == inputStates.IMAGE
 						}
 					>
-						{' '}
-						{component}{' '}
+						{component}
 					</ExecutionWindow>
 				) : (
+					// If you haven't taken the image yet, then either click a picture or, upload an image
 					<div className='learnCameraStyle'>
 						<Camera
 							isImageMirror={false}

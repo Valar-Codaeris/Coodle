@@ -3,7 +3,6 @@ export class Lexer {
 		console.log(tokens)
 		this.tokens = tokens;
 		this.normalizeTokens();
-
 		this.pos = 0;
 	}
 
@@ -61,12 +60,10 @@ export const types = {
 	ROTCW: 'ROTATE_CLOCKWISE',
 	ROTACW: 'ROTATE_ANTICLOCKWISE',
 
-	// Loops and if statements
+	// Loops statements
 	REP: 'REPEAT',
 	ENDREP: 'END_REPEAT',
-	IF: 'IF',
-	ELSE: 'ELSE',
-	BREAK: 'BREAK', // break a loop
+	BREAK: 'BREAK',
 
 	// Number arguments for the instructions
 	NUMBER: 'NUMBER',

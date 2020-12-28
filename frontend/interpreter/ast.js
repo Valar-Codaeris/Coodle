@@ -1,11 +1,5 @@
 const { types } = require('./lexer');
 
-export class AST {
-	constructor() {}
-}
-
-
-
 /**
  * Class which represents the Repeat Node in the AST
  */
@@ -54,18 +48,5 @@ export class Command {
 		this.type = type;
 		this.value = value;
 		this.token = token;
-	}
-}
-
-/**
- * Class which represents the IF condition in the AST
- * Has a condition (structure to be decided), a success element, which is an AST block
- * and a failure element, which is an optional AST block
- */
-export class IfStatement {
-	constructor(condition, success, failure) { 
-		this.condition = condition; // The condition
-		this.success = success; // Node to visit, if the condition passes
-		this.failure = failure; // Node to visit, if the condition fails
 	}
 }

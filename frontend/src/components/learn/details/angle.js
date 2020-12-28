@@ -1,9 +1,7 @@
 import React from 'react';
-import { Route, useRouteMatch } from 'react-router-dom';
 import { Segment } from 'semantic-ui-react';
 
-export const Rotate = () => {
-	const { path, url } = useRouteMatch();
+const Rotate = () => {
 	return (
 		<Segment className='descriptionStyle'>
 			<h2>Time to take a turn in our lesson : )</h2>

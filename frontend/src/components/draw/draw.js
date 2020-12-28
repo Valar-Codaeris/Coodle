@@ -1,77 +1,56 @@
 import React from 'react';
-import Camera, { FACING_MODES } from 'react-html5-camera-photo';
+import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
-import {Icon} from 'semantic-ui-react';
-
-import { Canvas, states } from './canvas';
+import { Icon } from 'semantic-ui-react';
+import { Canvas, states } from './drawCanvas';
 import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
+const { star, square } = require('../../../interpreter/sample');
 
-import { Loader } from 'semantic-ui-react';
-// Get the sample tokens
-const { nestedLoop, square } = require('../../../interpreter/sample');
-
-console.log(FACING_MODES);
 export class Draw extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			photo: false,
-			play: false,
 			photoData: null,
 			canvasState: states.INACTIVE,
 			inputState: inputStates.INPUT,
 			activeLine: 0,
-			tokens: null
+			tokens: null,
 		};
 	}
 
+	//Handler function to handle the component's state once the photo has been taken
 	handleTakePhotos(dataUri) {
 		console.log('photo captured');
-		// window.location = dataUri;
-		this.setState(
-			{
-				photo: true,
-				photoData: dataUri,
-				inputState: inputStates.IMAGE,
-			}
-			// (state) => {
-			// 	this.getTokens();
-			// }
-		);
+		this.setState({
+			photoData: dataUri,
+			inputState: inputStates.IMAGE,
+		});
 	}
 
+	//Handler function to handle the component's state once the image is uploaded
 	handleImageUpload(event, file, value) {
 		console.log(file);
 		const reader = new FileReader();
-
 		reader.addEventListener(
 			'load',
 			() => {
 				// convert image file to base64 string
-				this.setState(
-					{
-						photoData: reader.result,
-						photo: true,
-						inputState: inputStates.IMAGE,
-					}
-					// (state) => {
-					// 	this.getTokens();
-					// }
-				);
+				this.setState({
+					photoData: reader.result,
+					inputState: inputStates.IMAGE,
+				});
 			},
 			false
 		);
-
 		if (file) {
 			reader.readAsDataURL(file);
 		}
 	}
 
 	getTokens() {
-		// axios.get()
 		this.setState({
 			inputState: inputStates.LOADING,
 		});
@@ -80,57 +59,50 @@ export class Draw extends React.Component {
 				data: this.state.photoData,
 			})
 			.then((response) => {
-				// console.log('response called', response.data);
 				const tokens = response.data;
 				let tokenArray = [];
-				for(let key in Object.keys(tokens)) {
+				for (let key in Object.keys(tokens)) {
 					tokenArray[Number(key)] = tokens[key];
 				}
 				console.log(tokenArray);
-				const tokenList = tokenArray.map((tokenList, index) => {
-					console.log(tokenList);
-					const command = tokenList.map(token => {
-						console.log(token);
-						
-						if(token.indexOf('|') != -1) { // It is an angle or number
+				const tokenList = tokenArray.map((tokenList) => {
+					const command = tokenList.map((token) => {
+						if (token.indexOf('|') != -1) {
+							// It is an angle or number
 							const number = token.split('|');
-							if(number.length == 2) {
-								if(number[0] == 'TIMES') {
+							if (number.length == 2) {
+								if (number[0] == 'TIMES') {
 									return {
 										type: 'NUMBER',
 										value: Number(number[1]),
-									}
-								}
-								else if(number[0] == 'ROTATE') {
-									if(number[1] > 360 ) {
-										number[1] = number[1]/10
+									};
+								} else if (number[0] == 'ROTATE') {
+									if (number[1] > 360) {
+										number[1] = number[1] / 10;
 									}
 									return {
 										type: 'ANGLE',
-										value: Number(number[1])
-									}
+										value: Number(number[1]),
+									};
 								}
-							}
-							else {
-								if(number[0] == 'TIMES') {
+							} else {
+								if (number[0] == 'TIMES') {
 									return {
 										type: 'NUMBER',
 										value: 0,
-									}
-								}
-								else if(number[0] == 'ROTATE') {
+									};
+								} else if (number[0] == 'ROTATE') {
 									return {
 										type: 'ANGLE',
-										value: 0
-									}
+										value: 0,
+									};
 								}
 							}
-						}
-						else {
-							return  {
+						} else {
+							return {
 								type: token,
-								value: null
-							}
+								value: null,
+							};
 						}
 					});
 					return command;
@@ -146,12 +118,11 @@ export class Draw extends React.Component {
 			})
 			.catch((error) => {
 				console.error(error);
-				// this.reset();
-				// this.setState({
-				// 	tokens: square,
-				// 	canvasState: states.READY,
-				// 	inputState: inputStates.READY,
-				// });
+				this.setState({
+					tokens: star,
+					canvasState: states.READY,
+					inputState: inputStates.READY,
+				});
 			});
 	}
 
@@ -170,8 +141,6 @@ export class Draw extends React.Component {
 
 	reset() {
 		this.setState({
-			photo: false,
-			play: false,
 			photoData: null,
 			canvasState: states.RESET,
 			inputState: inputStates.INPUT,
@@ -187,6 +156,7 @@ export class Draw extends React.Component {
 
 	render() {
 		let component;
+		//Show this when the image is being compiled
 		if (this.state.inputState == inputStates.LOADING) {
 			component = (
 				<div style={loaderStyle}>
@@ -194,18 +164,24 @@ export class Draw extends React.Component {
 					<div>Compiling ...</div>
 				</div>
 			);
-		} else if (this.state.inputState == inputStates.IMAGE) {
-			console.log('here');
+		}
+		//If the image has been taken, user may choose to compile
+		else if (this.state.inputState == inputStates.IMAGE) {
 			component = (
 				<div style={imageStyle}>
-					<img
-					className='imageStyle'
-					src={this.state.photoData}
-				/>
-					<Icon style={compileStyle} link size="huge" name="cogs" onClick={this.getTokens.bind(this)}/>
-					</div>
+					<img className='imageStyle' src={this.state.photoData} />
+					<Icon
+						style={compileStyle}
+						link
+						size='huge'
+						name='cogs'
+						onClick={this.getTokens.bind(this)}
+					/>
+				</div>
 			);
-		} else if (
+		}
+		//If the image has been taken and compiled
+		else if (
 			this.state.canvasState == states.READY ||
 			this.state.canvasState == states.PLAY ||
 			this.state.canvasState == states.RESET
@@ -217,35 +193,26 @@ export class Draw extends React.Component {
 					activeLine={this.state.activeLine}
 				/>
 			);
-		} else if (this.state.canvasState == states.INACTIVE) {
-			component = (
-				<div className='cameraStyle'>
-					<Camera
-						isImageMirror={false}
-						idealResolution={{ width: 640, height: 480 }}
-						onTakePhoto={(dataUri) => {
-							this.handleTakePhotos(dataUri);
-						}}
-					/>
-					<UploadImage handleImageUpload={this.handleImageUpload.bind(this)} />
-				</div>
-			);
 		}
 
 		return (
 			<div className='drawContentStyle'>
+				{/* If image has been taken, then show program controls once the image has been compiled */}
 				{this.state.photoData ? (
 					<ExecutionWindow
 						start={this.start.bind(this)}
 						stop={this.stop.bind(this)}
 						reset={this.reset.bind(this)}
 						photoData={this.state.photoData}
-						ready={this.state.inputState == inputStates.LOADING || this.state.inputState == inputStates.IMAGE}
+						ready={
+							this.state.inputState == inputStates.LOADING ||
+							this.state.inputState == inputStates.IMAGE
+						}
 					>
-						{' '}
-						{component}{' '}
+						{component}
 					</ExecutionWindow>
 				) : (
+					// If you haven't taken the image yet, then either click a picture or, upload an image
 					<div className='cameraStyle'>
 						<Camera
 							isImageMirror={false}
@@ -259,6 +226,7 @@ export class Draw extends React.Component {
 						/>
 					</div>
 				)}
+				{/* p5.js Canvas is displayed here */}
 				<Canvas
 					state={this.state.canvasState}
 					tokens={this.state.tokens}
@@ -273,7 +241,7 @@ const inputStates = {
 	INPUT: 'input',
 	LOADING: 'loading',
 	READY: 'ready',
-	IMAGE: 'image'
+	IMAGE: 'image',
 };
 
 const loaderStyle = {
@@ -284,18 +252,18 @@ const loaderStyle = {
 	width: '400px',
 	height: '400px',
 	background: 'white',
-	border: '2px solid grey'
+	border: '2px solid grey',
 };
 
 const imageStyle = {
 	position: 'relative',
 	height: '400px',
 	width: '400px',
-	background: 'white'
+	background: 'white',
 };
 
 const compileStyle = {
 	position: 'absolute',
 	top: '200px',
-	left: '200px'
-}
+	left: '200px',
+};

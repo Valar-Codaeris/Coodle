@@ -2,17 +2,14 @@
  * This class implements the interpreter and draws the output on the screen
  */
 
-// const readline = require('readline');
 import { types } from './lexer';
 const { p5Wrapper } = require('./p5Wrapper');
 
 export class NodeVisitor {
 	constructor() {}
-
+	// A generic node visitor function
 	async visit(node) {
-		// A generic node visitor function
 		const methodName = `visit${node.constructor.name}`;
-
 		if (this[methodName]) {
 			return this[methodName](node);
 		}
@@ -21,16 +18,12 @@ export class NodeVisitor {
 }
 
 export class Interpreter extends NodeVisitor {
-	// The most important class
 	constructor(htmlElement) {
 		super();
-		// this.parser = parser;
-		this.environment = {}; // declare an environment, in case we are addig global variables in the future
+		this.environment = {}; // declare an environment, in case we are adding global variables in the future
 		this.htmlElement = htmlElement;
-		// this.node = this.parser.expression(); // Get the Abstract Syntax Tree from the Parser
 		this.graphic = new p5Wrapper(this.htmlElement);
 	}
-
 
 	attachParser(parser) {
 		this.parser = parser;
@@ -42,18 +35,17 @@ export class Interpreter extends NodeVisitor {
 	}
 
 	async visitBlock(node) {
-		const statements = node.statements;
 		for (let command of node.commands) {
 			await this.visit(command); // just visit each statement for now
 		}
 	}
+
 	async visitStop(node) {
 		console.log('Program executed successfully');
 	}
 
 	async visitCommand(node) {
-		console.log('Executing command', node);
-		console.log(types);
+		console.log('Executing command', node.type);
 		console.log(node.token.line);
 		this.updateActiveLine(node.token.line);
 		switch (node.type) {
@@ -88,11 +80,11 @@ export class Interpreter extends NodeVisitor {
 	async visitRepeat(node) {
 		console.log(`Repeat ${node.times} times`);
 		let times = node.times;
-		let infiniteLoop = false;
-		if (times == -1) infiniteLoop = true;
+		let infiniteLoop = (times === -1) ? true : false;
 		if (infiniteLoop) {
 			console.log('Started infinite loop, only break can save you :D');
 		}
+
 		while (times > 0 || infiniteLoop) {
 			console.log(times);
 			try {

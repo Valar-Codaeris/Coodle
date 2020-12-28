@@ -8,8 +8,8 @@ export class Parser {
 	}
 
 	/**
-	 * Check if the current token type matches the expected token type
-	 * If it matches, set current token to the next token
+	 * Check if the current token type matches the expected token type.
+	 * If it matches, set current token to the next token.
 	 * Else, throw a parsing error.
 	 * @param {string} token_type expected token type
 	 */
@@ -21,6 +21,22 @@ export class Parser {
 			this.error('Invalid character detected while eating');
 		}
 	}
+		
+	/**
+	 * Eat the start token
+	 */
+	start() {
+		this.eat(types.START);
+		return new Start(); // returns the start node where we can attach all the statements
+	}
+	
+	/**
+	 * Eat the stop token
+	 */
+	stop() {
+		this.eat(types.STOP);
+		return new Stop();
+	}
 
 	/**
 	 * Parses a single command, like 'ROTATE 90'
@@ -30,21 +46,19 @@ export class Parser {
 		let value = 0;
 		switch (this.currToken.type) {
 			case types.FRONT: {
-				const token = this.currToken;
+				const token = this.currToken; // save the current token
 				this.eat(types.FRONT); // eat the front token
 				if (this.currToken) value = this.currToken.value; // get the value from the next token
-				this.eat(types.NUMBER);
-
-				node = new Command(types.FRONT, value, token);
+				this.eat(types.NUMBER); // eat the number token
+				node = new Command(types.FRONT, value, token); // create a new node on the ast
 				break;
 			}
 
 			case types.BACK: {
 				const token = this.currToken;
-				this.eat(types.FRONT); // eat the front token
-				if (this.currToken) value = this.currToken.value; // get the value from the next token
+				this.eat(types.FRONT);
+				if (this.currToken) value = this.currToken.value;
 				this.eat(types.NUMBER);
-
 				node = new Command(types.BACK, value, token);
 				break;
 			}
@@ -54,7 +68,6 @@ export class Parser {
 				this.eat(types.ROTCW);
 				if (this.currToken) value = this.currToken.value;
 				this.eat(types.ANGLE);
-
 				node = new Command(types.ROTCW, value, token);
 				break;
 			}
@@ -64,7 +77,6 @@ export class Parser {
 				this.eat(types.ROTACW);
 				if (this.currToken) value = this.currToken.value;
 				this.eat(types.ANGLE);
-
 				node = new Command(types.ROTACW, value, token);
 				break;
 			}
@@ -78,32 +90,24 @@ export class Parser {
 
 			default: {
 				const token = this.currToken;
-				this.error('Invalid token detected in place of statement');
+				this.error('Invalid token detected in place of statement: ' + token);
 			}
 		}
 		return node;
 	}
 
 	/**
-	 * Eat the start token
-	 */
-	start() {
-		this.eat(types.START);
-		return new Start(); // returns the start node where we can attach all the statements
-	}
-
-	/**
 	 * Similar to a section of code inside {}
 	 * Can contain list of commands, repeat blocks, for now
-	 * Need to add if blocks here
+	 * Need to add if blocks in future
 	 */
 	block() {
 		const node = new Block();
+		// Check if it has something similar to a left bracket
 		while (
 			this.currToken.type != types.ENDREP &&
 			this.currToken.type != types.STOP
 		) {
-			// Check if has something similar to a left bracket
 
 			// If the token is a block
 			if (this.isCommand(this.currToken)) {
@@ -117,14 +121,6 @@ export class Parser {
 			}
 		}
 		return node;
-	}
-
-	/**
-	 * Eat the start token
-	 */
-	stop() {
-		this.eat(types.STOP);
-		return new Stop();
 	}
 
 	/**
@@ -153,8 +149,7 @@ export class Parser {
 			this.eat(types.NUMBER); // Eat the number token
 			repeatTimes = numToken.value;
 		} else {
-			// assume infinite loop condition
-			repeatTimes = -1;
+			repeatTimes = -1; // Assume infinite loop condition
 		}
 
 		const block = this.block(); // Get the block code using block()
@@ -169,11 +164,8 @@ export class Parser {
 	 */
 	expression() {
 		this.start(); // Eat the start token
-
 		let node = this.block(); // The basic block
-
 		this.stop(); // Eat the stop token
-
 		return node;
 	}
 
@@ -182,7 +174,6 @@ export class Parser {
 	 * @param {string} text
 	 */
 	error(text) {
-		// console.log(arguments);
 		console.log(text, this.currChar, this.pos);
 		throw new Error(text, this.currChar);
 	}

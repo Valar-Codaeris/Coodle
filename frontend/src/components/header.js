@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Segment, Icon } from 'semantic-ui-react';
 
 export const Header = () => {
@@ -18,18 +19,17 @@ const boxStyle = {
 	display: 'flex',
 	border: 'none',
 	alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '7vh',
+	justifyContent: 'space-between',
+	height: '7vh',
 };
 
 const brandStyle = {
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	// paddingLeft: 10,
 	color: 'white',
-    width: '13vw',
-    minWidth: '160px'
+	width: '13vw',
+	minWidth: '160px'
 };
 
 const imageStyle = {
@@ -42,6 +42,6 @@ const headingStyle = {
 	fontFamily: 'Raleway',
 };
 
-const spanStyle ={
+const spanStyle = {
 	fontSize: '36px',
 }

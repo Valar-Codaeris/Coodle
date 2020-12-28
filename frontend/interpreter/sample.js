@@ -1,10 +1,3 @@
-(
-	{
-		type: 'BREAK',
-		value: null,
-	}
-);
-
 export const learnSolution1 = [
 	[
 		{
@@ -510,12 +503,6 @@ export const star = [
 			value: 144,
 		},
 	],
-	// [
-	// 	{
-	// 		type: 'BREAK',
-	// 		value: null,
-	// 	},
-	// ],
 	[
 		{
 			type: 'END_REPEAT',
@@ -617,10 +604,6 @@ const infiniteLoop = [
 			type: 'REPEAT',
 			value: null,
 		},
-		// {
-		// 	type: 'NUMBER',
-		// 	value: 2,
-		// },
 	],
 	[
 		{
@@ -642,25 +625,12 @@ const infiniteLoop = [
 			value: 144,
 		},
 	],
-
 	[
 		{
 			type: 'END_REPEAT',
 			value: null,
 		},
 	],
-	// [
-	// 	{
-	// 		type: 'BREAK',
-	// 		value: null,
-	// 	},
-	// ],
-	// [
-	// 	{
-	// 		type: 'END_REPEAT',
-	// 		value: null,
-	// 	},
-	// ],
 	[
 		{
 			type: 'STOP',

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {Icon} from 'semantic-ui-react';
 
 export class ExecutionWindow extends React.Component {
@@ -8,8 +7,7 @@ export class ExecutionWindow extends React.Component {
 	}
 
 	render() {
-        const { start, stop, reset, photoData } = this.props;
-
+    const { start, stop, reset, photoData } = this.props;
 		const controlPanel = (
 			<div className='controlPanel'>
 				<Icon name='repeat' circular link size="big" color="blue" onClick={reset}/>
@@ -19,13 +17,10 @@ export class ExecutionWindow extends React.Component {
 		);
 		return (
 			<div style={{width:'400px', height:'400px'}}>
-				{/* {photo} */}
+				{/* Controls will only been shown once the image has been compiled by the user */}
 				{this.props.children}
 				{!this.props.ready && controlPanel}
 			</div>
 		);
 	}
 }
-
-
-

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Route, useRouteMatch } from 'react-router-dom';
 import { Segment } from 'semantic-ui-react';
 
 const Line = () => {

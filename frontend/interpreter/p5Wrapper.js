@@ -77,10 +77,8 @@ export class p5Wrapper {
 		 */
 		this.move = async (step) => {
 			const increment = 0.01 * step;
-
 			let promise = new Promise((resolve, reject) => {
 				const moveStep = () => {
-					
 					this.y = this.y + increment * sketch.cos(this.angle);
 					this.x = this.x - increment * sketch.sin(this.angle);
 					step = step - increment;
@@ -109,7 +107,7 @@ export class p5Wrapper {
 					this.angle = (this.angle + increment)%360;
 					angleCopy = angleCopy - increment;
 					if(angleCopy < 0) {
-						this.angle = (oldAngle + angle) % 360; //prevent decimal problems
+						this.angle = (oldAngle + angle) % 360; //To prevent any decimal problems
 						resolve();
 					}
 					else {

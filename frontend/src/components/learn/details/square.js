@@ -1,9 +1,7 @@
 import React from 'react';
-import { Route, useRouteMatch } from 'react-router-dom';
 import { Segment } from 'semantic-ui-react';
 
-export const Square = () => {
-	const { path, url } = useRouteMatch();
+const Square = () => {
 	return (
 		<Segment className='descriptionStyle'>
 			<h2>The power of symmetry : )</h2>

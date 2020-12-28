@@ -2,10 +2,18 @@ import React from 'react';
 import { types } from '../../interpreter/lexer';
 
 export const CodeDisplay = ({ tokens, activeLine = 0 }) => {
+
+	//Go through each line of the Coodle Code
 	const commands = tokens.map((tokenList, index) => {
+		
+		//Go through each token within a Coodle code's line
 		const command = tokenList.map((token, index) => {
+
+			//If its a command, use its corresponding image otherwise,..
 			const imageSource = `/assets/cards/${token.type}.png`;
 			let component = <img style={tokenStyle} src={imageSource} />;
+
+			//..use a number in its place
 			if (token.type == types.NUMBER || token.type == types.ANGLE) {
 				let value = token.value;
 				if(token.type == types.NUMBER && token.value >= 100) value = Math.ceil(value/100);
@@ -14,6 +22,8 @@ export const CodeDisplay = ({ tokens, activeLine = 0 }) => {
 			return component;
 		});
 		return (
+			
+			//The current line is active, highlight it
 			<div style={activeLine == index ? activeCommandStyle: commandStyle }>
 				{command}
 			</div>
@@ -30,6 +40,7 @@ const numberStyle = {
     alignItems: 'center'
 
 };
+
 const commandStyle = {
 	display: 'flex',
 	justifyContent: 'start',
@@ -38,6 +49,7 @@ const commandStyle = {
     width: '10vw',
     minWidth: '200px'
 };
+
 const activeCommandStyle = {
 	display: 'flex',
 	justifyContent: 'start',
@@ -50,6 +62,7 @@ const activeCommandStyle = {
 const tokenStyle = {
 	height: '10vh',
 };
+
 const codeStyle = {
 	display: 'flex',
 	flexDirection: 'column',
