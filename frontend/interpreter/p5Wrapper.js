@@ -11,8 +11,8 @@ export class p5Wrapper {
 		this.sketch = new p5(this.p5instance.bind(this), htmlElement);
 
 		this.dimensions = {
-			width: 400,
-			height: 400,
+			width: 350,
+			height: 350,
 		};
 	}
 	

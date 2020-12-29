@@ -14,13 +14,15 @@ export const Header = () => {
 };
 
 const boxStyle = {
+	position: 'sticky',
 	background: 'rgb(102, 145, 255)',
 	boxShadow: '0px 4px 9px 2px rgba(0, 0, 0, 0.09)',
 	display: 'flex',
 	border: 'none',
 	alignItems: 'center',
 	justifyContent: 'space-between',
-	height: '10vh',
+	height: 60,
+	zIndex: 1,
 };
 
 const brandStyle = {
@@ -28,21 +30,19 @@ const brandStyle = {
 	justifyContent: 'center',
 	alignItems: 'center',
 	color: 'white',
-	width: '13vw',
-	minWidth: '160px'
 };
 
 const imageStyle = {
-	height: '3.5vh',
+	height: 30,
 	marginTop: 0,
 };
 
 const headingStyle = {
 	padding: 0,
-	margin: '10px',
+	margin: 10,
 	fontFamily: 'Raleway',
 };
 
 const spanStyle = {
-	fontSize: '36px',
+	fontSize: 36,
 }

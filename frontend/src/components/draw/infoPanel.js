@@ -1,13 +1,11 @@
 import React from 'react'
-import { Breakpoint } from 'react-socks';
-import { Button, Card, CardContent, CardDescription, CardMeta } from 'semantic-ui-react';
-const { cardStyle, buttonListStyle, buttonStyle } = require('../../styles/styles');
+import { Card, CardContent, CardDescription, CardMeta } from 'semantic-ui-react';
+const { cardStyle } = require('../../styles/styles');
 
 export const InfoPanel = () => {
   return (
     <Card style={cardStyle}>
       <CardContent>
-        
         <CardDescription>
           <h1 style={headingStyle}>Draw Mode</h1>
         </CardDescription>
@@ -17,22 +15,13 @@ export const InfoPanel = () => {
           knowledge that you have so far gained by completing the lessons in
           the <strong> Learn mode</strong>. To get you started with
           experimentation, you can try playing with FORWARD, ROTATE and
-          LOOPS to draw shapes such as stars and squares as show below:
+          LOOPS to draw shapes such as stars and squares as shown below:
         </CardMeta>
 
         <CardDescription style={imageStyle}>
           <img src="/assets/draw-example1.png"/>
           <img src="/assets/draw-example2.png"/>
         </CardDescription>
-
-        <Breakpoint small down>
-          <CardDescription style={buttonListStyle}>
-            <Button style={buttonStyle} color="blue">
-              Let's Draw!
-            </Button>
-          </CardDescription>
-        </Breakpoint>
-
       </CardContent>
     </Card>
   );

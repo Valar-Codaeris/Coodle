@@ -17,7 +17,7 @@ export class App extends React.Component {
 				{/* Components to render depending upon the current url of the application */}
 				<Router>
 					<Header />
-					<div id='content'>
+					<div style={contentStyle}>
 						<Switch>
 							<Route path='/draw'>
 								<Draw />
@@ -37,4 +37,11 @@ export class App extends React.Component {
 			</div>
 		);
 	}
+}
+
+const contentStyle = {
+	width: '100vw',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
 }

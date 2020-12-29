@@ -8,7 +8,9 @@ import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
 import { InfoPanel } from './infoPanel';
-const { star, square } = require('../../../interpreter/sample');
+import { Breakpoint } from 'react-socks';
+const { square } = require('../../../interpreter/sample');
+const {cameraStyle} = require('../../styles/styles');
 
 export class Draw extends React.Component {
 	constructor(props) {
@@ -154,12 +156,13 @@ export class Draw extends React.Component {
 			activeLine,
 		});
 	}
-
+	
 	render() {
-		let component;
+		let desktopComponent;
+		let mobileComponent;
 		//Show this when the image is being compiled
 		if (this.state.inputState == inputStates.LOADING) {
-			component = (
+			desktopComponent = (
 				<div style={loaderStyle}>
 					<div className='ui active inline loader'></div>
 					<div>Compiling ...</div>
@@ -168,7 +171,7 @@ export class Draw extends React.Component {
 		}
 		//If the image has been taken, user may choose to compile
 		else if (this.state.inputState == inputStates.IMAGE) {
-			component = (
+			desktopComponent = (
 				<div style={imageStyle}>
 					<img className='imageStyle' src={this.state.photoData} />
 					<Icon
@@ -187,13 +190,15 @@ export class Draw extends React.Component {
 			this.state.canvasState == states.PLAY ||
 			this.state.canvasState == states.RESET
 		) {
-			component = (
+			desktopComponent = (
 				<CodeDisplay
 					state={this.state.canvasState}
 					tokens={this.state.tokens}
 					activeLine={this.state.activeLine}
 				/>
 			);
+			//mobileComponent is only being used for showing controls.
+			mobileComponent = desktopComponent;
 		}
 
 		return (
@@ -201,41 +206,77 @@ export class Draw extends React.Component {
 				{/* Information panel for the given mode */}
 				<InfoPanel/>
 
-				{/* If image has been taken, then show program controls once the image has been compiled */}
-				{this.state.photoData ? (
-					<ExecutionWindow
-						start={this.start.bind(this)}
-						stop={this.stop.bind(this)}
-						reset={this.reset.bind(this)}
-						photoData={this.state.photoData}
-						ready={
-							this.state.inputState == inputStates.LOADING ||
-							this.state.inputState == inputStates.IMAGE
-						}
-					>
-						{component}
-					</ExecutionWindow>
-				) : (
-					// If you haven't taken the image yet, then either click a picture or, upload an image
-					<div className='cameraStyle'>
-						<Camera
-							isImageMirror={false}
-							idealResolution={{ width: 640, height: 480 }}
-							onTakePhoto={(dataUri) => {
-								this.handleTakePhotos(dataUri);
-							}}
-						/>
-						<UploadImage
+				<Breakpoint small down>
+					{/* p5.js Canvas is displayed here */}
+					<Canvas
+						state={this.state.canvasState}
+						tokens={this.state.tokens}
+						updateActiveLine={this.updateActiveLine.bind(this)}
+					/>
+					{/* If image has been taken, then show program controls once the image has been compiled */}
+					{this.state.photoData ? (
+						<ExecutionWindow
+								start={this.start.bind(this)}
+								stop={this.stop.bind(this)}
+								reset={this.reset.bind(this)}
+								photoData={this.state.photoData}
+								ready={
+									this.state.inputState == inputStates.LOADING ||
+									this.state.inputState == inputStates.IMAGE
+								}
+							>
+								{mobileComponent}
+						</ExecutionWindow>
+					) : (
+					<div style={cameraStyle}>
+						<UploadImage 
 							handleImageUpload={this.handleImageUpload.bind(this)}
+							handleGetTokens={this.getTokens.bind(this)}
+							/>
+					</div>
+					)}
+				</Breakpoint>
+
+				<Breakpoint large up>
+					<div style={programStyle}>
+						{/* If image has been taken, then show program controls once the image has been compiled */}
+						{this.state.photoData ? (
+							<ExecutionWindow
+								start={this.start.bind(this)}
+								stop={this.stop.bind(this)}
+								reset={this.reset.bind(this)}
+								photoData={this.state.photoData}
+								ready={
+									this.state.inputState == inputStates.LOADING ||
+									this.state.inputState == inputStates.IMAGE
+								}
+							>
+								{desktopComponent}
+							</ExecutionWindow>
+						) : (
+							// If you haven't taken the image yet, then either click a picture or, upload an image
+							<div className='cameraStyle'>
+								<Camera
+									isImageMirror={false}
+									idealResolution={{ width: 640, height: 480 }}
+									onTakePhoto={(dataUri) => {
+										this.handleTakePhotos(dataUri);
+									}}
+								/>
+								<UploadImage 
+									handleImageUpload={this.handleImageUpload.bind(this)}
+									handleGetTokens={this.getTokens.bind(this)}
+								/>
+							</div>
+						)}
+						{/* p5.js Canvas is displayed here */}
+						<Canvas
+							state={this.state.canvasState}
+							tokens={this.state.tokens}
+							updateActiveLine={this.updateActiveLine.bind(this)}
 						/>
 					</div>
-				)}
-				{/* p5.js Canvas is displayed here */}
-				<Canvas
-					state={this.state.canvasState}
-					tokens={this.state.tokens}
-					updateActiveLine={this.updateActiveLine.bind(this)}
-				/>
+				</Breakpoint>
 			</div>
 		);
 	}
@@ -253,21 +294,30 @@ const loaderStyle = {
 	flexDirection: 'column',
 	alignItems: 'center',
 	justifyContent: 'center',
-	width: '400px',
-	height: '400px',
+	width: '350px',
+	height: '350px',
 	background: 'white',
-	border: '2px solid grey',
+	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
+	fontFamily: 'Nunito',
+	borderRadius: '5px',
+	marginBottom: 50,
 };
 
 const imageStyle = {
 	position: 'relative',
-	height: '400px',
-	width: '400px',
 	background: 'white',
+	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
+	borderRadius: '5px',
 };
 
 const compileStyle = {
 	position: 'absolute',
-	top: '200px',
-	left: '200px',
+	top: '155px',
+	left: '145px',
 };
+
+const programStyle = {
+	display: 'flex',
+	justifyContent: 'space-around',
+	width: 800,
+}
