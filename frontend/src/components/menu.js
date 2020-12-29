@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-const { cardStyle, headingStyle, spanStyle, metaStyle, buttonListStyle, buttonStyle } = require('../styles/styles');
+const { cardStyle, headingStyle, spanStyle, metaStyle } = require('../styles/styles');
 
 export const Menu = () => {
 	return (
@@ -40,4 +40,24 @@ export const Menu = () => {
 			</Card.Content>
 		</Card>
 	);
+};
+
+export const buttonListStyle = {
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	flexDirection: 'column',
+	width: '100%',
+};
+
+export const buttonStyle = {
+	width: '150px',
+	boxShadow: '1px 2px 9px rgba(0, 0, 0, 0.12)',
+	borderRadius: '4px',
+	fontFamily: 'Nunito',
+	fontWeight: '800',
+	textTransform: 'uppercase',
+	fontSize: '14px',
+	height: '45px',
+	marginTop: 20,
 };

@@ -1,6 +1,7 @@
 export const cardStyle = {
+	marginTop: 50,
+	marginBottom: 50,
 	padding: 20,
-	height: 'auto',
 	width: '40vw',
 	minWidth: '350px',
 	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
@@ -22,24 +23,6 @@ export const metaStyle = {
 	textAlign: 'center',
 };
 
-export const buttonListStyle = {
-	marginTop: '30px',
-	display: 'flex',
-	justifyContent: 'space-between',
-	alignItems: 'center',
-	flexDirection: 'column',
-	height: '200px',
-	width: '100%',
-};
-
-export const buttonStyle = {
-	marginTop: 20,
-	width: '150px',
-	boxShadow: '1px 2px 9px rgba(0, 0, 0, 0.12)',
-	borderRadius: '4px',
-	fontFamily: 'Nunito',
-	fontWeight: '800',
-	textTransform: 'uppercase',
-	fontSize: '14px',
-	height: '45px',
-};
+export const cameraStyle = {
+	position: 'relative',
+}

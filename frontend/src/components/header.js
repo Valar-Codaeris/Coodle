@@ -14,13 +14,15 @@ export const Header = () => {
 };
 
 const boxStyle = {
+	position: 'sticky',
 	background: 'rgb(102, 145, 255)',
 	boxShadow: '0px 4px 9px 2px rgba(0, 0, 0, 0.09)',
 	display: 'flex',
 	border: 'none',
 	alignItems: 'center',
 	justifyContent: 'space-between',
-	height: '10vh',
+	height: 60,
+	zIndex: 1,
 };
 
 const brandStyle = {
@@ -33,7 +35,7 @@ const brandStyle = {
 };
 
 const imageStyle = {
-	height: '3.5vh',
+	height: 30,
 	marginTop: 0,
 };
 
