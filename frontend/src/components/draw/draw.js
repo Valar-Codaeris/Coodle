@@ -10,7 +10,7 @@ import { CodeDisplay } from '../codeDisplay';
 import { InfoPanel } from './infoPanel';
 import { Breakpoint } from 'react-socks';
 const { square } = require('../../../interpreter/sample');
-const {cameraStyle} = require('../../styles/styles');
+const { loaderStyle, imageBoxStyle, imageStyle, compileStyle, uploadStyle, executionStyle, contentStyle} = require('../../styles/styles');
 
 export class Draw extends React.Component {
 	constructor(props) {
@@ -172,8 +172,8 @@ export class Draw extends React.Component {
 		//If the image has been taken, user may choose to compile
 		else if (this.state.inputState == inputStates.IMAGE) {
 			desktopComponent = (
-				<div style={imageStyle}>
-					<img className='imageStyle' src={this.state.photoData} />
+				<div style={imageBoxStyle}>
+					<img style={imageStyle} src={this.state.photoData} />
 					<Icon
 						style={compileStyle}
 						link
@@ -202,7 +202,7 @@ export class Draw extends React.Component {
 		}
 
 		return (
-			<div className='drawContentStyle'>
+			<div style={contentStyle}>
 				{/* Information panel for the given mode */}
 				<InfoPanel/>
 
@@ -228,7 +228,7 @@ export class Draw extends React.Component {
 								{mobileComponent}
 						</ExecutionWindow>
 					) : (
-					<div style={cameraStyle}>
+					<div style={uploadStyle}>
 						<UploadImage 
 							handleImageUpload={this.handleImageUpload.bind(this)}
 							handleGetTokens={this.getTokens.bind(this)}
@@ -238,7 +238,7 @@ export class Draw extends React.Component {
 				</Breakpoint>
 
 				<Breakpoint large up>
-					<div style={programStyle}>
+					<div style={executionStyle}>
 						{/* If image has been taken, then show program controls once the image has been compiled */}
 						{this.state.photoData ? (
 							<ExecutionWindow
@@ -288,36 +288,3 @@ const inputStates = {
 	READY: 'ready',
 	IMAGE: 'image',
 };
-
-const loaderStyle = {
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	justifyContent: 'center',
-	width: '350px',
-	height: '350px',
-	background: 'white',
-	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
-	fontFamily: 'Nunito',
-	borderRadius: '5px',
-	marginBottom: 50,
-};
-
-const imageStyle = {
-	position: 'relative',
-	background: 'white',
-	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
-	borderRadius: '5px',
-};
-
-const compileStyle = {
-	position: 'absolute',
-	top: '155px',
-	left: '145px',
-};
-
-const programStyle = {
-	display: 'flex',
-	justifyContent: 'space-around',
-	width: 800,
-}

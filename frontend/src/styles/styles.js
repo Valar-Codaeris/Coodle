@@ -23,6 +23,62 @@ export const metaStyle = {
 	textAlign: 'center',
 };
 
-export const cameraStyle = {
+export const canvasStyle = {
+	height: 350,
+	marginBottom: 46,
+}
+
+export const loaderStyle = {
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	justifyContent: 'center',
+	width: '350px',
+	height: '350px',
+	background: 'white',
+	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
+	fontFamily: 'Nunito',
+	borderRadius: '5px',
+	marginBottom: 50,
+};
+
+export const imageBoxStyle = {
 	position: 'relative',
+	background: 'white',
+	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
+	borderRadius: '5px',
+};
+
+export const imageStyle = {
+	height: 350,
+	width: 350,
+	marginTop: 0,
+	opacity: 0.7,
+}
+
+export const compileStyle = {
+	position: 'absolute',
+	top: '155px',
+	left: '145px',
+};
+
+export const uploadStyle = {
+	position: 'relative',
+}
+
+export const executionStyle = {
+	display: 'flex',
+	justifyContent: 'space-around',
+	width: '50vw',
+}
+
+export const contentStyle = {
+	height: '60vh',
+	display: 'flex',
+	justifyContent: 'space-around',
+	alignItems: 'start',
+	width: '55vw',
+	minWidth: 350,
+	flexWrap: 'wrap',
+	background: 'white',
 }

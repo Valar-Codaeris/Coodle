@@ -23,17 +23,6 @@ img {
 	margin-top: 20px;
 }
 
-.drawContentStyle {
-	height: 60vh;
-	display: flex;
-	justify-content: space-around;
-	align-items: start;
-	width: 55vw;
-	min-width: 350px;
-	flex-wrap: wrap;
-	background: 'white';
-}
-
 .cameraStyle {
 	position: relative;
 	height: 350px;
@@ -41,30 +30,11 @@ img {
 	margin-bottom: 50px;
 }
 
-.imageStyle {
-	height: 350px;
-	width: 350px;
-	margin-top: 0;
-	opacity: 0.7;
-}
-
 .cameraStyle video {
 	position: relative;
 	background-color: black;
 	height: 350px;
 	width: 350px;
-}
-
-.canvasStyle {
-	height: 350px;
-	margin-bottom: 46px;
-}
-
-.uploadForm {
-	position: absolute;
-	padding: 5px;
-	bottom: 0px;
-	right: -4px;
 }
 
 .learnContentStyle {

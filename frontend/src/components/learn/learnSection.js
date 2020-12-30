@@ -22,7 +22,7 @@ export class LearnSection extends React.Component {
 	render() {
 		return (
 			//Create a grid of equal columns
-			<div style={sectionStyle}>				
+			<div style={sectionStyle}>		
 				<Grid columns='equal'>
 					
 					{/* First column */}

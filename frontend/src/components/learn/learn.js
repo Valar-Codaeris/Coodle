@@ -7,12 +7,7 @@ import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
-const {
-	learnSolution1,
-	learnSolution2,
-	learnSolution3,
-	learnSolution4,
-} = require('../../../interpreter/sample');
+const { learnSolution1,	learnSolution2, learnSolution3, learnSolution4 } = require('../../../interpreter/sample');
 
 export class Learn extends React.Component {
 	constructor(props) {

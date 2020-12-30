@@ -1,4 +1,5 @@
 import React from 'react';
+const { canvasStyle } = require('../../styles/styles');
 const { LearnInterpreter } = require('../../../interpreter/learnInterpreter');
 const { Parser } = require('../../../interpreter/parser');
 
@@ -46,7 +47,7 @@ export class Canvas extends React.Component {
 	}
 
 	render() {
-		return <div className='learnCanvasStyle' ref={this.myRef} />;
+		return <div style={canvasStyle} ref={this.myRef} />;
 	}
 }
 

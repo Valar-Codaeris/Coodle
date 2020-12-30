@@ -1,6 +1,7 @@
 import React from 'react';
 const { Interpreter } = require('../../../interpreter/interpreter');
 const { Parser } = require('../../../interpreter/parser');
+const { canvasStyle } = require('../../styles/styles')
 
 export class Canvas extends React.Component {
 	constructor(props) {
@@ -43,7 +44,7 @@ export class Canvas extends React.Component {
 	}
 
 	render() {
-		return <div className='canvasStyle' ref={this.myRef} />;
+		return <div style={canvasStyle} ref={this.myRef} />;
 	}
 }
 
