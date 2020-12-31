@@ -223,13 +223,6 @@ export class Learn extends React.Component {
 
 				<Breakpoint large up>
 					<div style={executionStyle}>
-						{/* p5.js Canvas is displayed here */}
-						<Canvas
-							state={this.state.canvasState}
-							tokens={this.state.tokens}
-							level={this.props.level}
-							updateActiveLine={this.updateActiveLine.bind(this)}
-						/>
 						{/* If image has been taken, then show program controls once the image has been compiled */}
 						{this.state.photoData ? (
 							<ExecutionWindow
@@ -260,6 +253,13 @@ export class Learn extends React.Component {
 								/>
 							</div>
 						)}
+						{/* p5.js Canvas is displayed here */}
+						<Canvas
+							state={this.state.canvasState}
+							tokens={this.state.tokens}
+							level={this.props.level}
+							updateActiveLine={this.updateActiveLine.bind(this)}
+						/>
 					</div>
 				</Breakpoint>
 			</div>

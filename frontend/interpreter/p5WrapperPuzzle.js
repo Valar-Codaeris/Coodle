@@ -4,8 +4,8 @@ import { Puzzle } from './puzzle';
 export class p5WrapperPuzzle {
   constructor(htmlElement, player, level=1) {
     this.dimension = {
-			width: 400,
-			height: 400,
+			width: 350,
+			height: 350,
     };
     this.level = level;
     this.walls = [];

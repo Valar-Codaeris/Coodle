@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChoiceBar } from './choiceBar';
 import { Puzzle } from './puzzle';
+import { InfoPanel } from './puzzleInfoPanel';
 
 export class PuzzleSection extends React.Component {
 	constructor(props) {
@@ -19,6 +20,7 @@ export class PuzzleSection extends React.Component {
 	render() {
 		return (
 			<div style={sectionStyle}>
+				<InfoPanel/>
 				<ChoiceBar onChoose={this.onChoose.bind(this)} />
 				<Puzzle level={this.state.level} />
 			</div>
@@ -27,10 +29,7 @@ export class PuzzleSection extends React.Component {
 }
 
 const sectionStyle = {
-	height: '60vh',
 	width: '100vw',
-	padding: 0,
-	margin: 0,
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'center',

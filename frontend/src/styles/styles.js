@@ -73,7 +73,6 @@ export const executionStyle = {
 }
 
 export const contentStyle = {
-	height: '60vh',
 	display: 'flex',
 	justifyContent: 'space-around',
 	alignItems: 'start',

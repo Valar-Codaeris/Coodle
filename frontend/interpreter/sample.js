@@ -194,7 +194,7 @@ export const puzzleSolution1 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 250,
+			value: 200,
 		},
 	],
 	[
@@ -214,7 +214,7 @@ export const puzzleSolution1 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 300,
+			value: 260,
 		},
 	],
 	[
@@ -234,7 +234,7 @@ export const puzzleSolution1 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 250,
+			value: 200,
 		},
 	],
 	[
@@ -259,7 +259,7 @@ export const puzzleSolution2 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 200,
+			value: 170,
 		}
 	],
 	[
@@ -279,7 +279,7 @@ export const puzzleSolution2 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 250,
+			value: 220,
 		},
 	],
 	[
@@ -299,7 +299,7 @@ export const puzzleSolution2 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 200,
+			value: 170,
 		},
 	],
 	[
@@ -324,7 +324,7 @@ export const puzzleSolution3 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 100,
+			value: 80,
 		},
 	],
 	[
@@ -404,7 +404,7 @@ export const puzzleSolution3 = [
 		},
 		{
 			type: 'NUMBER',
-			value: 100,
+			value: 80,
 		},
 	],
 	[

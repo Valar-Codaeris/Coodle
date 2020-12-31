@@ -27,8 +27,9 @@ export class LearnSection extends React.Component {
 				<Grid columns={1}>
 					
 					{/* First Row */}
-					<Grid.Row>
+					<Grid.Row style={studyStyle}>
 						<Grid.Column style={studyStyle}>
+
 							<Card style={cardStyle}>
 								<CardContent>
 									<CardDescription>
@@ -45,12 +46,13 @@ export class LearnSection extends React.Component {
 									</CardMeta>
 								</CardContent>
 							</Card>
+
 						</Grid.Column>
 					</Grid.Row>
 					
 					{/* Second Row */}
-					<Grid.Row>
-						<Grid.Column style={executeStyle}>
+					<Grid.Row style={executionStyle}>
+						<Grid.Column style={executionStyle}>
 							<Learn level={this.state.level} />
 						</Grid.Column>
 					</Grid.Row>
@@ -71,12 +73,12 @@ const metaStyle = {
 const studyStyle = {
 	display: 'flex',
 	justifyContent: 'center',
-	padding: 0,
-	margin: 0,
+	paddingBottom: 0,
 };
 
-const executeStyle = {
+const executionStyle = {
 	display: 'flex',
 	justifyContent: 'center',
 	flexWrap: 'wrap',
+	padding: 0,
 }
