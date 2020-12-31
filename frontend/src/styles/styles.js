@@ -33,12 +33,12 @@ export const loaderStyle = {
 	flexDirection: 'column',
 	alignItems: 'center',
 	justifyContent: 'center',
-	width: '350px',
-	height: '350px',
+	width: 350,
+	height: 350,
 	background: 'white',
 	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
 	fontFamily: 'Nunito',
-	borderRadius: '5px',
+	borderRadius: 5,
 	marginBottom: 50,
 };
 
@@ -46,7 +46,7 @@ export const imageBoxStyle = {
 	position: 'relative',
 	background: 'white',
 	boxShadow: '2px 2px 45px 9px rgba(5, 66, 252, 0.1)',
-	borderRadius: '5px',
+	borderRadius: 5,
 };
 
 export const imageStyle = {
@@ -58,8 +58,8 @@ export const imageStyle = {
 
 export const compileStyle = {
 	position: 'absolute',
-	top: '155px',
-	left: '145px',
+	top: 155,
+	left: 145,
 };
 
 export const uploadStyle = {
@@ -81,4 +81,8 @@ export const contentStyle = {
 	minWidth: 350,
 	flexWrap: 'wrap',
 	background: 'white',
+}
+
+export const segmentStyle = {
+	padding: '20px 0px',
 }

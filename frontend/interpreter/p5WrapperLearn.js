@@ -6,8 +6,8 @@ export class p5WrapperLearn {
     this.player = player;
     this.level = level;
     this.dimension = {
-      width: 400,
-      height: 400,
+      width: 350,
+      height: 350,
     };
     this.sketch = new p5(this.p5instance.bind(this), htmlelement);
 

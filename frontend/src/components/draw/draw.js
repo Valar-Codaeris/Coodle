@@ -7,7 +7,7 @@ import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
-import { InfoPanel } from './infoPanel';
+import { InfoPanel } from './drawInfoPanel';
 import { Breakpoint } from 'react-socks';
 const { square } = require('../../../interpreter/sample');
 const { loaderStyle, imageBoxStyle, imageStyle, compileStyle, uploadStyle, executionStyle, contentStyle} = require('../../styles/styles');

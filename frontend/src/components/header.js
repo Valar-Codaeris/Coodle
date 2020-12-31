@@ -41,6 +41,7 @@ const headingStyle = {
 	padding: 0,
 	margin: 10,
 	fontFamily: 'Raleway',
+	color: 'white',
 };
 
 const spanStyle = {

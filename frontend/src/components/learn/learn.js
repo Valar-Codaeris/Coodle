@@ -7,6 +7,8 @@ import UploadImage from '../uploadImage';
 import axios from 'axios';
 import { ExecutionWindow } from '../execution';
 import { CodeDisplay } from '../codeDisplay';
+import { Breakpoint } from 'react-socks';
+const { loaderStyle, imageBoxStyle, imageStyle, compileStyle, uploadStyle, executionStyle, contentStyle} = require('../../styles/styles');
 const { learnSolution1,	learnSolution2, learnSolution3, learnSolution4 } = require('../../../interpreter/sample');
 
 export class Learn extends React.Component {
@@ -141,10 +143,12 @@ export class Learn extends React.Component {
 	}
 
 	render() {
-		let component;
+		let desktopComponent;
+		let mobileComponent;
+
 		//Show this when the image is being compiled
 		if (this.state.inputState == inputStates.LOADING) {
-			component = (
+			desktopComponent = (
 				<div style={loaderStyle}>
 					<div className='ui active inline loader'></div>
 					<div>Compiling ...</div>
@@ -153,9 +157,9 @@ export class Learn extends React.Component {
 		}
 		//If the image has been taken, user may choose to compile
 		else if (this.state.inputState == inputStates.IMAGE) {
-			component = (
-				<div style={imageStyle}>
-					<img className='imageStyle' src={this.state.photoData} />
+			desktopComponent = (
+				<div style={imageBoxStyle}>
+					<img style={imageStyle} src={this.state.photoData} />
 					<Icon
 						style={compileStyle}
 						link
@@ -172,53 +176,92 @@ export class Learn extends React.Component {
 			this.state.canvasState == states.PLAY ||
 			this.state.canvasState == states.RESET
 		) {
-			component = (
+			desktopComponent = (
 				<CodeDisplay
 					state={this.state.canvasState}
 					tokens={this.state.tokens}
 					activeLine={this.state.activeLine}
 				/>
 			);
+			//mobileComponent is only being used for showing controls.
+			mobileComponent = desktopComponent;
 		}
 
 		return (
-			<div className='learnContentStyle'>
-				{/* p5.js Canvas is displayed here */}
-				<Canvas
-					state={this.state.canvasState}
-					tokens={this.state.tokens}
-					level={this.props.level}
-					updateActiveLine={this.updateActiveLine.bind(this)}
-				/>
-				{/* If image has been taken, then show program controls once the image has been compiled */}
-				{this.state.photoData ? (
-					<ExecutionWindow
-						start={this.start.bind(this)}
-						stop={this.stop.bind(this)}
-						reset={this.reset.bind(this)}
-						photoData={this.state.photoData}
-						ready={
-							this.state.inputState == inputStates.LOADING ||
-							this.state.inputState == inputStates.IMAGE
-						}
-					>
-						{component}
-					</ExecutionWindow>
-				) : (
-					// If you haven't taken the image yet, then either click a picture or, upload an image
-					<div className='learnCameraStyle'>
-						<Camera
-							isImageMirror={false}
-							idealResolution={{ width: 640, height: 480 }}
-							onTakePhoto={(dataUri) => {
-								this.handleTakePhotos(dataUri);
-							}}
-						/>
-						<UploadImage
+			<div style={contentStyle}>
+				<Breakpoint small down>
+					{/* p5.js Canvas is displayed here */}
+					<Canvas
+						state={this.state.canvasState}
+						tokens={this.state.tokens}
+						level={this.props.level}
+						updateActiveLine={this.updateActiveLine.bind(this)}
+					/>
+					{/* If image has been taken, then show program controls once the image has been compiled */}
+					{this.state.photoData ? (
+						<ExecutionWindow
+								start={this.start.bind(this)}
+								stop={this.stop.bind(this)}
+								reset={this.reset.bind(this)}
+								photoData={this.state.photoData}
+								ready={
+									this.state.inputState == inputStates.LOADING ||
+									this.state.inputState == inputStates.IMAGE
+								}
+							>
+								{mobileComponent}
+						</ExecutionWindow>
+					) : (
+					<div style={uploadStyle}>
+						<UploadImage 
 							handleImageUpload={this.handleImageUpload.bind(this)}
-						/>
+							handleGetTokens={this.getTokens.bind(this)}
+							/>
 					</div>
-				)}
+					)}
+				</Breakpoint>
+
+				<Breakpoint large up>
+					<div style={executionStyle}>
+						{/* p5.js Canvas is displayed here */}
+						<Canvas
+							state={this.state.canvasState}
+							tokens={this.state.tokens}
+							level={this.props.level}
+							updateActiveLine={this.updateActiveLine.bind(this)}
+						/>
+						{/* If image has been taken, then show program controls once the image has been compiled */}
+						{this.state.photoData ? (
+							<ExecutionWindow
+								start={this.start.bind(this)}
+								stop={this.stop.bind(this)}
+								reset={this.reset.bind(this)}
+								photoData={this.state.photoData}
+								ready={
+									this.state.inputState == inputStates.LOADING ||
+									this.state.inputState == inputStates.IMAGE
+								}
+							>
+								{desktopComponent}
+							</ExecutionWindow>
+						) : (
+							// If you haven't taken the image yet, then either click a picture or, upload an image
+							<div className='cameraStyle'>
+								<Camera
+									isImageMirror={false}
+									idealResolution={{ width: 640, height: 480 }}
+									onTakePhoto={(dataUri) => {
+										this.handleTakePhotos(dataUri);
+									}}
+								/>
+								<UploadImage
+									handleImageUpload={this.handleImageUpload.bind(this)}
+									handleGetTokens={this.getTokens.bind(this)}
+								/>
+							</div>
+						)}
+					</div>
+				</Breakpoint>
 			</div>
 		);
 	}
@@ -229,28 +272,4 @@ const inputStates = {
 	LOADING: 'loading',
 	READY: 'ready',
 	IMAGE: 'image',
-};
-
-const loaderStyle = {
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	justifyContent: 'center',
-	width: '400px',
-	height: '400px',
-	background: 'white',
-	border: '2px solid grey',
-};
-
-const imageStyle = {
-	position: 'relative',
-	height: '400px',
-	width: '400px',
-	background: 'white',
-};
-
-const compileStyle = {
-	position: 'absolute',
-	top: '200px',
-	left: '200px',
 };

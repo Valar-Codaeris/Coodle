@@ -9,7 +9,6 @@ export const InfoPanel = () => {
         <CardDescription>
           <h1 style={headingStyle}>Draw Mode</h1>
         </CardDescription>
-
         <CardMeta>
           Within <strong>Draw mode</strong> you can freely explore the
           knowledge that you have so far gained by completing the lessons in
@@ -17,7 +16,6 @@ export const InfoPanel = () => {
           experimentation, you can try playing with FORWARD, ROTATE and
           LOOPS to draw shapes such as stars and squares as shown below:
         </CardMeta>
-
         <CardDescription style={imageStyle}>
           <img src="/assets/draw-example1.png"/>
           <img src="/assets/draw-example2.png"/>
