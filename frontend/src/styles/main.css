@@ -21,12 +21,14 @@ h1 {
 
 h2 {
 	font-size: 26px;
-	color: #ff6691;
+	color: #6691ff;
 	font-weight: 800;
+	margin-bottom: 0px;
 }
 
 hr {
 	margin-bottom: 10px;
+	border: 1px solid #d8d8d8;
 	color: #d8d8d8;
 }
 
