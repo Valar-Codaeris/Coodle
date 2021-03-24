@@ -2,7 +2,7 @@ import cv2
 import os 
 import string
 from pathlib import Path
-
+import random
 class Dataset:
     """
     class to store and categorize different symbols in the photo
@@ -24,7 +24,7 @@ class Dataset:
         "LOOP": [],
         "IF": [],
         "ELSE": [],
-        "STOP": [],
+        "END": [],
         "START": [],
         "END_LOOP": []
     }
@@ -49,7 +49,7 @@ class Dataset:
         self.classes["ELSE"].append(self.set_1[8])
         self.classes["IF"].append(self.set_1[9])
         self.classes["LOOP"].append(self.set_1[10])
-        self.classes["STOP"].append(self.set_1[11])
+        self.classes["END_LOOP"].append(self.set_1[11])
 
 
         self.classes["RIGHT"].append(self.set_2[0])
@@ -63,19 +63,23 @@ class Dataset:
         self.classes["ELSE"].append(self.set_2[8])
         self.classes["IF"].append(self.set_2[9])
         self.classes["LOOP"].append(self.set_2[10])
-        self.classes["STOP"].append(self.set_2[11])
+        self.classes["END_LOOP"].append(self.set_2[11])
 
-    def save_class(class_name):
+    def save_class(self,class_name):
         """
         Save the photos of a class in hard disk
         """ 
         for photo in self.classes[class_name]:
-            self.save_to_folder(class_name)
+            self.save_to_folder(class_name,photo)
 
-    def save_to_folder(folder_path):
+    def save_to_folder(self,folder_path,img):
         """
         Save an image to a folder, and give it an unique name
         """
-        file_name = ''.join(random.choice(letters) for i in range(10)) + '.jpeg'
-        cv2.imwrite(f'{Path().absolute()}/{folder_path}/{file_name}')
+        file_name = ''.join(random.choice(self.letters) for i in range(10)) + '.jpeg'
+        try:
+            os.mkdir('dataset/'+folder_path)
+        except:
+            print("")
+        cv2.imwrite(f'dataset/{folder_path}/{file_name}',img)
         print(f"Saved file {file_name}")

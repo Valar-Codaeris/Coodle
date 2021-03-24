@@ -76,9 +76,9 @@ def contour_detection(preprocessed_image, src_image, ratio):
     for c in contours:
         cv2.drawContours( src_image,[c], 0, (255,255,0), 1)
 
-    cv2.imshow("result", src_image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("result", src_image)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
     
     token_number = 0
     print(len(contours))
@@ -104,9 +104,9 @@ def contour_detection(preprocessed_image, src_image, ratio):
                 x, y, w, h = cv2.boundingRect(cnt_scaled)
                 roi = src_image[y:y+h, x:x+w]
                 print(cv2.contourArea(contour))
-                cv2.imshow('patch'+ str(token_number), roi)
-                cv2.waitKey(0)
-                cv2.destroyAllWindows()
+                # cv2.imshow('patch'+ str(token_number), roi)
+                # cv2.waitKey(0)
+                # cv2.destroyAllWindows()
                 
                 output_patches.append(roi)
                 centroids.append(cy_scaled)
