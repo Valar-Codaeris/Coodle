@@ -6,8 +6,8 @@ from re import search
 import os
 import re
 import requests
-from .block_detector import detect_tokens
-from django.conf import settings
+from block_detector import detect_tokens
+# from django.conf import settings
 
 def TokenGenerator(image):
 	blocks = []
@@ -41,10 +41,10 @@ def TokenGenerator(image):
 	#print("test")
 	for img,lineNO in zip(blocks,lines):
 		
-		subscription_key = '047bcc1b65e347f3833df48eb4f61b0b'
+		subscription_key = '4003ed869c5542caae3dc4d1ee5ac2bd'
 
 
-		endpoint = 'https://coodle-card-text-detector.cognitiveservices.azure.com/'
+		endpoint = 'https://speechdebugger.cognitiveservices.azure.com/'
 
 		ocr_url = endpoint + "vision/v3.0/ocr"
 
@@ -54,8 +54,10 @@ def TokenGenerator(image):
 		params = {'language': 'unk', 'detectOrientation': 'true'}
 
 		filename = "{}.png".format(os.getpid())
+		cv2.imshow('image', img)
+		cv2.waitKey(0) 
 		cv2.imwrite(filename, img)
-		with open(os.path.join(settings.BASE_DIR, filename), 'rb') as f:
+		with open(filename, 'rb') as f:
 			data = f.read()
 		response = requests.post(url=ocr_url,
 							data=data,
@@ -65,7 +67,7 @@ def TokenGenerator(image):
 		response.raise_for_status()
 
 		analysis = response.json()
-		#print(analysis)
+		print(analysis)
 		# Extract the word bounding boxes and text.
 		line_infos = [region["lines"] for region in analysis["regions"]]
 		word_infos = []
@@ -101,6 +103,6 @@ def TokenGenerator(image):
 	return sequence
 
 # test
-#image = cv2.imread("./test/test.jpg")
-#sequence = TokenGenerator(image)
-#print(sequence)
+image = cv2.imread("./test/learn3.jpg")
+sequence = TokenGenerator(image)
+print(sequence)
