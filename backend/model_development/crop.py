@@ -73,8 +73,8 @@ def contour_detection(preprocessed_image, src_image, ratio):
 
     print("Length of contours", len(contours))
 
-    for c in contours:
-        cv2.drawContours( src_image,[c], 0, (255,255,0), 1)
+    # for c in contours:
+    #     cv2.drawContours( src_image,[c], 0, (255,255,0), 1)
 
     # cv2.imshow("result", src_image)
     # cv2.waitKey(0)

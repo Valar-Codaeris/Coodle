@@ -112,7 +112,7 @@ def detect_tokens(image): # wrapper function
 
 
 # test
-#image_path = './test/test1.jpeg'
-#image = cv2.imread(image_path)
-#output_patches, line_number = detect_tokens(image)
-#print(line_number)
+# image_path = './test/learn3.jpg'
+# image = cv2.imread(image_path)
+# output_patches, line_number = detect_tokens(image)
+# print(line_number)

@@ -81,5 +81,6 @@ class Dataset:
             os.mkdir('dataset/'+folder_path)
         except:
             print("")
+        # os.mkdir('dataset/'+folder_path)
         cv2.imwrite(f'dataset/{folder_path}/{file_name}',img)
         print(f"Saved file {file_name}")
