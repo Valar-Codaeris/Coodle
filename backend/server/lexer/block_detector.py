@@ -108,11 +108,14 @@ def detect_tokens(image): # wrapper function
 	output_patches, centroids, heights =  contour_detection(preprocessed_img, image, ratio)
 	line_number = get_line_numbers(centroids, heights)
 
+	for patch, centre, height, line_no in zip(output_patches, centroids, heights, line_number):
+		print(centre, height)
+
 	return output_patches, line_number
 
 
 # test
-# image_path = './test/learn3.jpg'
-# image = cv2.imread(image_path)
-# output_patches, line_number = detect_tokens(image)
-# print(line_number)
+image_path = './test/learn3.jpg'
+image = cv2.imread(image_path)
+output_patches, line_number = detect_tokens(image)
+print(line_number)

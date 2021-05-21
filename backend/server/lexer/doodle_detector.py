@@ -1,42 +1,36 @@
-import os
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+from .block_detector import detect_tokens
+from .symbol_detector import SymbolDetector
 
-import tensorflow as tf
-from PIL import Image, ImageOps
 
-import numpy as np
-np.set_printoptions(suppress=True) # Disable scientific notation for clarity
+class TokenGenerator:
 
-class SymbolClassifier:
+    def __init__(self, image) -> None:
+        self.symbol_detector = SymbolDetector()
+        self.image = image
+        self.tokens = []
+
+    def create_tokens(self):
+        self.patches, self.line_numbers = detect_tokens(self.image)
+
+        for i in range(0, len(self.tokens)):
+            patch = self.patches[i]
+            line_number = self.line_numbers[i]
+
+            if i != 0 and line_number == self.line_numbers[i-1]: # we are dealing with an operand here
+                token = self.detect_operand(patch)
+            else: # we are dealing with an operator
+                token = self.detect_operator(patch)
+            
+            self.tokens.append(token)
     
-    def __init__(self):
-        
-        self.model = tf.keras.models.load_model('keras_model.h5')
-        self.classes = ["FRONT", "BACK" "IF", "ELSE", "START", "STOP", "REPEAT", "END_REPEAT"]
-        self.image_size = (224, 224) # Set the image size
+    def detect_operator(self, patch):
+        token = self.symbol_detector.classify(patch)
+        return token
 
+    def detect_operand(self, patch):
+        # token = self.number_detector.classify(patch)
+        # return token
+        return "1|TIMES"
 
-    def classify(self, image):
-        
-        # Create the array of the right shape. resize image, then store in np array
-        data = np.ndarray(shape=(1, self.image_size[0], self.image_size[1], 3), dtype=np.float32)
-        image = ImageOps.fit(image, self.image_size, Image.ANTIALIAS)
-        image_array = np.asarray(image)
-        # image.show()
-        normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
-        data[0] = normalized_image_array
-
-        # Run the model on the image, get the prediction, and the index
-        prediction = self.model.predict(data)[0].tolist()
-        # print(prediction)
-        index = prediction.index(max(prediction))
-        print("Predicted: ", self.classes[index])
-
-if __name__ == "__main__":
-    classifier = SymbolClassifier()
-    img = Image.open('test.jpeg')
-
-    classifier.classify(img)
-
-
-# print(prediction)
+    def get_tokens(self):
+        return self.tokens
