@@ -1,7 +1,7 @@
 import cv2
 import imutils
 import numpy as np
-
+import random
 
 def scale_contour(contour, scale):
     
@@ -47,54 +47,42 @@ def contour_detection(preprocessed_image, src_image, ratio):
 	edged = cv2.Canny(preprocessed_image, 30, 200)
 	contours, _ = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE) 
 
-	token_number = 0
+	cnt_rects = []
 
 	for contour in reversed(contours):
 		if len(contour) >= 4:
 			if cv2.contourArea(contour) > 300:
-				token_number += 1
+				cnt_rects.append((cv2.boundingRect(contour), contour))
 
-				cnt_scaled, cy_scaled = scale_contour(contour, ratio)
+	# Sort all the lines vertically first
+	sort_vert = sorted(cnt_rects,key=lambda  x:x[0][1]) # sort the contours using y co ordinate
+	print(len(sort_vert))
+	lines = [[]]
+	lines[0].append(sort_vert[0])
 
-				x, y, w, h = cv2.boundingRect(cnt_scaled)
-				roi = src_image[y:y+h, x:x+w]
-				#cv2.imshow('patch'+ str(token_number), roi)
-				#cv2.waitKey(0)
-				#cv2.destroyAllWindows()
-				
-				output_patches.append(roi)
-				centroids.append(cy_scaled)
-				heights.append(h/2)
-				#y_coordinates.append(cy_scaled)
-
-				#if token_number == 1:
-					#continue
-				#else: # need optimisation(low priority)
-					#for y_coordinate in y_coordinates[:token number -1]:
-						#height_difference = abs(y_coordinate - y_coordinates[token_number-1])
-						#if height_difference < :
-
-				#draw_contour = cv2.drawContours(src_image, [cnt_scaled], -1, (255, 140, 240), 2)
-				#cv2.imshow('Contours', draw_contour) 
-				#cv2.waitKey(0) 
-				#cv2.destroyAllWindows()
-
-	# print(len(output_patches))
-
-	return output_patches, centroids, heights 
-
-def get_line_numbers(centroids, heights):
-
-	line_number = [1] # initialise line no of first token
+	# Separate the blocks into their separate lines
+	for i in range(1, len(sort_vert)):
+		if abs(sort_vert[i][0][1] - sort_vert[i-1][0][1]) > abs(sort_vert[i][0][3]/2 + sort_vert[i-1][0][3]/2):
+			print("yes")
+			lines.append([])
+		lines[len(lines)-1].append(sort_vert[i])
 	
-	for i in range(1, len(centroids)):
-		if abs(centroids[i] - centroids[i-1]) <  abs(heights[i] + heights[i-1]):  # heights already in h/2 
-			line_number.append(line_number[len(line_number)-1])
-		else:
-			line_number.append(line_number[len(line_number)-1] + 1)
+	# Sort the blocks in each line horizontally
+	for i in range(0, len(lines)):
+		lines[i] = sorted(lines[i], key=lambda x:x[0][0])
 
-	return line_number
+	# Get the output image patch for each block
+	for line in lines:
+		for block in line:
+			cnt_rect, contour = block
+			cnt_scaled, cy_scaled = scale_contour(contour, ratio)
+			x, y, w, h = cv2.boundingRect(cnt_scaled)
+			img = src_image[y:y+h, x:x+w]
+			cv2.imshow('patch'+ str(random.randint(0, 100)), img)
+			cv2.waitKey(0)
+			cv2.destroyAllWindows()
 
+	return lines
 
 def detect_tokens(image): # wrapper function
 
@@ -105,13 +93,10 @@ def detect_tokens(image): # wrapper function
 	'''
 
 	preprocessed_img, ratio = preprocess(image)
-	output_patches, centroids, heights =  contour_detection(preprocessed_img, image, ratio)
-	line_number = get_line_numbers(centroids, heights)
+	lines =  contour_detection(preprocessed_img, image, ratio)
+	line_numbers = [line_no for line_no in range(0, len(lines)) for i in range(0, len(lines[line_no])) ]
 
-	for patch, centre, height, line_no in zip(output_patches, centroids, heights, line_number):
-		print(centre, height)
-
-	return output_patches, line_number
+	return lines, line_numbers
 
 
 # test
