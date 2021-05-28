@@ -30,7 +30,7 @@ class SymbolClassifier:
 
         # Run the model on the image, get the prediction, and the index
         prediction = self.model.predict(data)[0].tolist()
-        print(prediction)
+        # print(prediction)
         index = prediction.index(max(prediction))
         print("Predicted: ", self.classes[index])
         return self.classes[index]

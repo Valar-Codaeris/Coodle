@@ -56,14 +56,13 @@ def contour_detection(preprocessed_image, src_image, ratio):
 
 	# Sort all the lines vertically first
 	sort_vert = sorted(cnt_rects,key=lambda  x:x[0][1]) # sort the contours using y co ordinate
-	print(len(sort_vert))
+	# print(len(sort_vert))
 	lines = [[]]
 	lines[0].append(sort_vert[0])
 
 	# Separate the blocks into their separate lines
 	for i in range(1, len(sort_vert)):
 		if abs(sort_vert[i][0][1] - sort_vert[i-1][0][1]) > abs(sort_vert[i][0][3]/2 + sort_vert[i-1][0][3]/2):
-			print("yes")
 			lines.append([])
 		lines[len(lines)-1].append(sort_vert[i])
 	

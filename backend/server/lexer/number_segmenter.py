@@ -3,6 +3,13 @@ import imutils
 import numpy as np
 import random
 from PIL import Image
+from keras.preprocessing.image import load_img
+from keras.preprocessing.image import img_to_array
+from keras.models import load_model
+from keras.models import load_model
+
+
+model = load_model('number_model.h5')
 
 def scale_contour(contour, scale):
 	
@@ -81,23 +88,37 @@ def contour_detection(preprocessed_image, src_image, ratio):
 
 def detect_numbers(image): # wrapper function
 
-	'''output : output_patches = list of cropped token images
-				line_number    = list of line numbers where each token appears
-
-			use the index of list for the sequential token numbers
-	'''
-
-	# image = Image.fromarray(image)
 	preprocessed_img, ratio = preprocess(image)
 	output_patches =  contour_detection(preprocessed_img, image, ratio)
-
+	print("Length", len(output_patches))
 
 	"""
 	ML Code here
 	"""
+	multiplier = 1
+	number = 0
+	for patch in reversed(output_patches):
+		number = number + multiplier*classify_numbers(patch)
+		multiplier = multiplier * 10
 
+	print(number)
 
-	return "1"
+	return str(number)
+
+# load and prepare the image
+def resize_image(img):
+	# Grayscale the image
+	
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	thresh, img = cv2.threshold(gray, 220, 255, cv2.THRESH_BINARY)
+	img = cv2.resize(img, dsize=(28, 28), interpolation=cv2.INTER_CUBIC)
+	img = img.reshape(1, 28, 28, 1)
+	img = img.astype('float32')
+	img = img / 255.0
+	return img
 
 def classify_numbers(image_patch):
-	pass
+	image_patch = resize_image(image_patch)
+	digit = model.predict_classes(image_patch)
+	print(digit)
+	return digit[0]
