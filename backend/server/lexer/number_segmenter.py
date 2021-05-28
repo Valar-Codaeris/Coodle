@@ -63,34 +63,19 @@ def contour_detection(preprocessed_image, src_image, ratio):
 			cnt_rects.append((cv2.boundingRect(contour), contour))
 
 	# Sort all the lines vertically first
-	sort_vert = sorted(cnt_rects,key=lambda  x:x[0][1]) # sort the contours using y co ordinate
-	print(len(sort_vert))
-	lines = [[]]
-	lines[0].append(sort_vert[0])
-
-	# Separate the blocks into their separate lines
-	for i in range(1, len(sort_vert)):
-		if abs(sort_vert[i][0][1] - sort_vert[i-1][0][1]) > abs(sort_vert[i][0][3]/2 + sort_vert[i-1][0][3]/2):
-			print("yes")
-			lines.append([])
-		lines[len(lines)-1].append(sort_vert[i])
-	
-	# Sort the blocks in each line horizontally
-	for i in range(0, len(lines)):
-		lines[i] = sorted(lines[i], key=lambda x:x[0][0])
+	sort_hor = sorted(cnt_rects,key=lambda  x:x[0][0]) # sort the contours using x co-ordinate
 
 	output_patches = []
 	# Get the output image patch for each block
-	for line in lines:
-		for block in line:
-			cnt_rect, contour = block
-			cnt_scaled, cy_scaled = scale_contour(contour, ratio)
-			x, y, w, h = cv2.boundingRect(cnt_scaled)
-			img = src_image[y:y+h, x:x+w]
-			output_patches.append(img)
-			cv2.imshow('patch'+ str(random.randint(0, 100)), img)
-			cv2.waitKey(0)
-			cv2.destroyAllWindows()
+	for patch in sort_hor:
+		cnt_rect, contour = patch
+		cnt_scaled, cy_scaled = scale_contour(contour, ratio)
+		x, y, w, h = cv2.boundingRect(cnt_scaled)
+		img = src_image[y:y+h, x:x+w]
+		output_patches.append(img)
+		cv2.imshow('patch'+ str(random.randint(0, 100)), img)
+		cv2.waitKey(0)
+		cv2.destroyAllWindows()
 
 	return output_patches
 
