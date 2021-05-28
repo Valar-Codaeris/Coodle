@@ -2,27 +2,28 @@ import cv2
 import imutils
 import numpy as np
 import random
+from PIL import Image
 
 def scale_contour(contour, scale):
-    
-    M = cv2.moments(contour)
-    cx = int(M['m10']/M['m00'])
-    cy = int(M['m01']/M['m00'])
+	
+	M = cv2.moments(contour)
+	cx = int(M['m10']/M['m00'])
+	cy = int(M['m01']/M['m00'])
 
-    cx_scaled = int(M['m10']/M['m00'])*scale
-    cy_scaled = int(M['m01']/M['m00'])*scale
+	cx_scaled = int(M['m10']/M['m00'])*scale
+	cy_scaled = int(M['m01']/M['m00'])*scale
 
-    cnt_norm = contour - [cx, cy]
-    cnt_scaled = cnt_norm * scale
-    cnt_scaled = cnt_scaled + [cx_scaled, cy_scaled]
-    cnt_scaled = cnt_scaled.astype(np.int32)
+	cnt_norm = contour - [cx, cy]
+	cnt_scaled = cnt_norm * scale
+	cnt_scaled = cnt_scaled + [cx_scaled, cy_scaled]
+	cnt_scaled = cnt_scaled.astype(np.int32)
 
-    return cnt_scaled, cy_scaled
+	return cnt_scaled, cy_scaled
 
 def preprocess(image):
 	
 	# resize to smaller factor for better shape approximation
-	resized = imutils.resize(image, width=300)
+	resized = imutils.resize(image, width=100)
 	ratio = image.shape[0] / float(resized.shape[0])
 	
 	# convert the resized image to grayscale, blur slightly and threshold it
@@ -47,12 +48,19 @@ def contour_detection(preprocessed_image, src_image, ratio):
 	edged = cv2.Canny(preprocessed_image, 30, 200)
 	contours, _ = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE) 
 
+	for c in contours:
+		cv2.drawContours( preprocessed_image,[c], 0, (255,0,0), 1)
+
+	# cv2.imshow("result", preprocessed_image)
+	# cv2.waitKey(0)
+	# cv2.destroyAllWindows()
+
 	cnt_rects = []
 
 	for contour in reversed(contours):
-		if len(contour) >= 4:
-			if cv2.contourArea(contour) > 300:
-				cnt_rects.append((cv2.boundingRect(contour), contour))
+		print(cv2.contourArea(contour))
+		if cv2.contourArea(contour) > 100 and cv2.contourArea(contour) < 1000:
+			cnt_rects.append((cv2.boundingRect(contour), contour))
 
 	# Sort all the lines vertically first
 	sort_vert = sorted(cnt_rects,key=lambda  x:x[0][1]) # sort the contours using y co ordinate
@@ -80,13 +88,13 @@ def contour_detection(preprocessed_image, src_image, ratio):
 			x, y, w, h = cv2.boundingRect(cnt_scaled)
 			img = src_image[y:y+h, x:x+w]
 			output_patches.append(img)
-			# cv2.imshow('patch'+ str(random.randint(0, 100)), img)
-			# cv2.waitKey(0)
-			# cv2.destroyAllWindows()
+			cv2.imshow('patch'+ str(random.randint(0, 100)), img)
+			cv2.waitKey(0)
+			cv2.destroyAllWindows()
 
-	return output_patches, lines
+	return output_patches
 
-def detect_tokens(image): # wrapper function
+def detect_numbers(image): # wrapper function
 
 	'''output : output_patches = list of cropped token images
 				line_number    = list of line numbers where each token appears
@@ -94,16 +102,17 @@ def detect_tokens(image): # wrapper function
 			use the index of list for the sequential token numbers
 	'''
 
+	# image = Image.fromarray(image)
 	preprocessed_img, ratio = preprocess(image)
-	output_patches, lines =  contour_detection(preprocessed_img, image, ratio)
-	line_numbers = [line_no for line_no in range(0, len(lines)) for i in range(0, len(lines[line_no])) ]
-
-	return output_patches, line_numbers
+	output_patches =  contour_detection(preprocessed_img, image, ratio)
 
 
-# test
-if __name__ == "__main__":
-	image_path = './test/test3.jpeg'
-	image = cv2.imread(image_path)
-	output_patches, line_number = detect_tokens(image)
-	print(line_number)
+	"""
+	ML Code here
+	"""
+
+
+	return "1"
+
+def classify_numbers(image_patch):
+	pass
