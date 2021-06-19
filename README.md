@@ -1,5 +1,4 @@
 # Coodle
-The repository contains code for the Coodle project, made for Smart India Hackathon
 
 With the exponetial rise in technology, there is an increasing need for
 necessary basic education in computer science. There are several problems
